@@ -3,14 +3,24 @@
 ### Simulation framework
 
 * The simulation harness is follows:
-  * Agents are initialised with personalities and initial inventories
+  * Agents are initialised with personalities and initial inventories.
   * We loop through two stages:
     * The _marketplace_ stage:
-      * Agents post offers to the marketplace
-      * Agents decide on offers in the marketplace, resulting in an exchange goods
+      * Agents post offers to the marketplace.
+      * Agents decide on offers in the marketplace, resulting in an exchange goods.
     * The _work_ stage:
-      * Agents produce and consume goods
-* The marketplace provides a framework for agents to exchange goods
+      * Agents produce and consume goods.
+* Marketplace details:
+  * Offers are all posted without knowledge of other offers being made (i.e.
+    simultaneous placement).
+  * Offers can be partially accepted (if a posted offer is selling 100 goods at $5,
+    then it is valid to buy 10 goods for $50).
+  * Multiple partially accepted offers can go through, provided sufficient stock exists
+  * If more interest is expressed than stock is available, order is randomised in order
+    to not give any priority. However, the seller is informed of the degree of interest
+    in their offer, even after stock has dried up, to permit better estimation of good value.
+  * This can proceed for several rounds of offers.
+
 
 ### Agents
 

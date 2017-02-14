@@ -9,25 +9,36 @@ import market.TradeResult;
  * even more complicated.
  */
 public class CompositeValuationStrategy implements ValuationStrategy {
-    private final ImmutableMap<Double, ValuationStrategy> weightings;
+    private final ImmutableMap<Double, ValuationStrategy> weightedStrategies;
+    private final int goodId;
 
-    CompositeValuationStrategy(ImmutableMap<Double, ValuationStrategy> weightings) {
-        this.weightings = normaliseWeightings(weightings);
+    CompositeValuationStrategy(ImmutableMap<Double, ValuationStrategy> weightedStrategies, int goodId) {
+        this.weightedStrategies = normaliseWeightings(weightedStrategies);
+        this.goodId = goodId;
+    }
+
+    @Override
+    public int getGoodId() {
+        return goodId;
     }
 
     @Override
     public void processTradeResult(TradeResult result) {
-        weightings.values().forEach(strategy -> strategy.processTradeResult(result));
+        weightedStrategies.values().forEach(strategy -> strategy.processTradeResult(result));
     }
 
     @Override
-    public double valueItem(int goodId, double percentile) {
-        return 0;
+    public double valueItem(double percentile) {
+        return weightedStrategies.entrySet().stream()
+                .map(entry -> entry.getKey() * entry.getValue().valueItem(percentile))
+                .reduce(0.0, (a, b) -> a + b);
     }
 
     @Override
-    public double probabilityOfGoodTrade(int goodId, double offeredPrice) {
-        return 0;
+    public double probabilityOfGoodTrade(double offeredPrice) {
+        return weightedStrategies.entrySet().stream()
+                .map(entry -> entry.getKey() * entry.getValue().probabilityOfGoodTrade(offeredPrice))
+                .reduce(0.0, (a, b) -> a + b);
     }
 
     private ImmutableMap<Double, ValuationStrategy> normaliseWeightings(

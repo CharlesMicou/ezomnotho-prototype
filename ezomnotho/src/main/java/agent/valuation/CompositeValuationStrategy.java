@@ -12,7 +12,7 @@ public class CompositeValuationStrategy implements ValuationStrategy {
     private final ImmutableMap<Double, ValuationStrategy> weightedStrategies;
     private final int goodId;
 
-    CompositeValuationStrategy(ImmutableMap<Double, ValuationStrategy> weightedStrategies, int goodId) {
+    public CompositeValuationStrategy(int goodId,ImmutableMap<Double, ValuationStrategy> weightedStrategies) {
         this.weightedStrategies = normaliseWeightings(weightedStrategies);
         this.goodId = goodId;
     }

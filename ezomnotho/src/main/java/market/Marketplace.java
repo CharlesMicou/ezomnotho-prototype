@@ -10,7 +10,7 @@ public class Marketplace {
     private final ImmutableList<Agent> agents;
     private List<TradeResult> results;
 
-    Marketplace(ImmutableList<Agent> agents) {
+    public Marketplace(ImmutableList<Agent> agents) {
         this.agents = agents;
         this.results = new ArrayList<>();
     }

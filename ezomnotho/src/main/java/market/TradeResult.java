@@ -11,7 +11,7 @@ public class TradeResult {
     public final int quantityTraded;
     public final double pricePerItem;
 
-    TradeResult(int goodId, int quantityOffered, int quantityTraded, double pricePerItem) {
+    public TradeResult(int goodId, int quantityOffered, int quantityTraded, double pricePerItem) {
         this.goodId = goodId;
         this.quantityOffered = quantityOffered;
         this.quantityTraded = quantityTraded;

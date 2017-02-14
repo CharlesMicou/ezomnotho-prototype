@@ -22,12 +22,20 @@ public class FixedVarianceNormalDistributionValuationStrategy implements Valuati
     @Override
     public double valueItem(double percentile) {
         if (percentile <= 0) return 0;
+        if (sd() == 0) {
+            return mean;
+        }
         return new NormalDistribution(rng, mean, sd()).inverseCumulativeProbability(percentile);
     }
 
     @Override
     public double probabilityOfGoodTrade(double offeredPrice) {
         if (offeredPrice <= 0) return 0;
+        if (sd() == 0) {
+            if (offeredPrice > mean) {
+                return 0;
+            } else return 1;
+        }
         return new NormalDistribution(rng, mean, sd()).cumulativeProbability(offeredPrice);
     }
 

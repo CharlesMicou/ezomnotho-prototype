@@ -22,12 +22,20 @@ public class LearnedNormalDistributionValuationStrategy implements ValuationStra
     @Override
     public double valueItem(double percentile) {
         if (percentile <= 0) return 0;
+        if (variance == 0) {
+            return mean;
+        }
         return new NormalDistribution(rng, mean, Math.sqrt(variance)).inverseCumulativeProbability(percentile);
     }
 
     @Override
     public double probabilityOfGoodTrade(double offeredPrice) {
         if (offeredPrice <= 0) return 0;
+        if (variance == 0) {
+            if (offeredPrice > mean) {
+                return 0;
+            } else return 1;
+        }
         return new NormalDistribution(rng, mean, Math.sqrt(variance)).cumulativeProbability(offeredPrice);
     }
 

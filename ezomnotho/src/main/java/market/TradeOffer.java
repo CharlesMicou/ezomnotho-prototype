@@ -14,7 +14,7 @@ public class TradeOffer {
     private int remainingQuantity;
     private List<TradeResponse> responses;
 
-    TradeOffer(int goodId, double pricePerItem, int quantity, Agent creator) {
+    public TradeOffer(int goodId, double pricePerItem, int quantity, Agent creator) {
         this.goodId = goodId;
         this.pricePerItem = pricePerItem;
         this.initialQuantity = quantity;

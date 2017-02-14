@@ -12,7 +12,7 @@ public class AgentImpl implements Agent {
     private ConcurrentHashMap<Integer, Integer> ownedGoods;
     private double ownedMoney;
 
-    AgentImpl(double initialMoney){
+    public AgentImpl(double initialMoney){
         this.ownedMoney = initialMoney;
         this.ownedGoods = new ConcurrentHashMap<>();
     };

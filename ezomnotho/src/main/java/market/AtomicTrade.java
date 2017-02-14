@@ -9,7 +9,7 @@ public class AtomicTrade {
 
     private AtomicTrade(){};
 
-    static void makeTrade(Agent buyer, Agent seller, int goodId, int quantity, double pricePerItem) {
+    public static void makeTrade(Agent buyer, Agent seller, int goodId, int quantity, double pricePerItem) {
         buyer.sellGoodsTo(goodId, quantity, pricePerItem);
         seller.buyGoodsFrom(goodId, quantity, pricePerItem);
     }

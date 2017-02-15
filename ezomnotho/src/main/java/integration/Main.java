@@ -14,21 +14,23 @@ public class Main {
 
         ValuationStrategy learnedStrategy = new LearnedNormalDistributionValuationStrategy(goodId, history);
 
-        ValuationStrategy fixedStrategy = new FixedVarianceNormalDistributionValuationStrategy(goodId, history, 0.05);
+        ValuationStrategy fixedStrategy = new FixedVarianceNormalDistributionValuationStrategy(goodId, history, 0.1);
 
-        ImmutableMap<Double, ValuationStrategy> composite = ImmutableMap.of(0.0, learnedStrategy, 1.0, fixedStrategy);
+        ImmutableMap<Double, ValuationStrategy> composite = ImmutableMap.of(0.7, learnedStrategy, 0.3, fixedStrategy);
 
         ValuationStrategy overallStrategy = new CompositeValuationStrategy(goodId, composite);
 
 
-        TradeResult trade1 = new TradeResult(goodId, 100, 100, 50);
-        TradeResult trade2 = new TradeResult(goodId, 250, 250, 30);
-        TradeResult trade3 = new TradeResult(goodId, 100, 100, 60);
+        TradeResult trade1 = new TradeResult(goodId, 100, 1, 50);
+        TradeResult trade2 = new TradeResult(goodId, 250, 3, 30);
+        TradeResult trade3 = new TradeResult(goodId, 100, 5, 60);
 
         overallStrategy.processTradeResult(trade1);
-        System.out.println(overallStrategy.probabilityOfGoodTrade(51));
+        System.out.println(overallStrategy.valueItem(0.98));
         overallStrategy.processTradeResult(trade2);
-        System.out.println(overallStrategy.probabilityOfGoodTrade(50));
+        System.out.println(overallStrategy.valueItem(0.6));
+        overallStrategy.processTradeResult(trade3);
+        System.out.println(overallStrategy.valueItem(0.6));
     }
 
 }

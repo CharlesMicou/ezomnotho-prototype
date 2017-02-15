@@ -36,7 +36,7 @@ public class FixedVarianceNormalDistributionValuationStrategy implements Valuati
                 return 0;
             } else return 1;
         }
-        return new NormalDistribution(rng, mean, sd()).cumulativeProbability(offeredPrice);
+        return (1.0 - new NormalDistribution(rng, mean, sd()).cumulativeProbability(offeredPrice));
     }
 
     @Override

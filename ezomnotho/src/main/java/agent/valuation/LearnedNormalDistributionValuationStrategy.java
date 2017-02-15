@@ -36,7 +36,7 @@ public class LearnedNormalDistributionValuationStrategy implements ValuationStra
                 return 0;
             } else return 1;
         }
-        return new NormalDistribution(rng, mean, Math.sqrt(variance)).cumulativeProbability(offeredPrice);
+        return (1.0 - new NormalDistribution(rng, mean, Math.sqrt(variance)).cumulativeProbability(offeredPrice));
     }
 
     @Override
@@ -56,6 +56,7 @@ public class LearnedNormalDistributionValuationStrategy implements ValuationStra
     private void updateMean(double newSample, int sampleCount) {
         int n = numberOfSamples.get();
         mean = mean * (n - sampleCount) / n + newSample * sampleCount / n;
+        System.out.println("Updated mean to " + mean);
     }
 
     private void updateVariance(double newSample, int sampleCount) {

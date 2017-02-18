@@ -56,7 +56,6 @@ public class LearnedNormalDistributionValuationStrategy implements ValuationStra
     private void updateMean(double newSample, int sampleCount) {
         int n = numberOfSamples.get();
         mean = mean * (n - sampleCount) / n + newSample * sampleCount / n;
-        System.out.println("Updated mean to " + mean);
     }
 
     private void updateVariance(double newSample, int sampleCount) {

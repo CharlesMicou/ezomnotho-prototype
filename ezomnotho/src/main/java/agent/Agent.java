@@ -45,5 +45,10 @@ public interface Agent {
      * @param pricePerItem the price paid per good.
      */
     void buyGoodsFrom(int goodId, int quantity, double pricePerItem);
+
+    /**
+     *  The agent performs its actions for the production cycle.
+     */
+    void produce();
 }
 

@@ -37,16 +37,16 @@ public class GoodInfoDatabase {
         return tagToIds.getOrDefault(tag, ImmutableList.of());
     }
 
+    /**
+     *  Time is a special case.
+     */
+    public static int TIME_GOOD_ID = 0;
+
     public static GoodInfoDatabase create() {
         /**
          * Just define goods inline here
          */
-        List<GoodInfo> goodsToAdd = new ArrayList<>();
-
-        goodsToAdd.add(new GoodInfo(1, "Fish", ImmutableList.of(GoodTag.FOOD)));
-        goodsToAdd.add(new GoodInfo(2, "Firewood", ImmutableList.of(GoodTag.FUEL)));
-        goodsToAdd.add(new GoodInfo(3, "Sparkling Gem", ImmutableList.of(GoodTag.LUXURY)));
-        goodsToAdd.add(new GoodInfo(4, "Potato", ImmutableList.of(GoodTag.FOOD)));
+        List<GoodInfo> goodsToAdd = makeGoods();
 
         Map<String, Integer> tempNameToId = new HashMap<>();
         Map<GoodTag, List<Integer>> tempTagToIds = new HashMap<>();
@@ -74,4 +74,19 @@ public class GoodInfoDatabase {
 
         return new GoodInfoDatabase(ImmutableMap.copyOf(tempIdToInfo), builder.build(), ImmutableMap.copyOf(tempNameToId));
     }
+
+    private static List<GoodInfo> makeGoods() {
+        List<GoodInfo> goods = new ArrayList<>();
+
+        // YEAAAAH
+        goods.add(GoodInfo.createSpecial(TIME_GOOD_ID, "Time", ImmutableList.of(), ImmutableList.of(SpecialGoodProperties.UNTRADEABLE)));
+
+        goods.add(GoodInfo.create(1, "Fish", ImmutableList.of(GoodTag.FOOD)));
+        goods.add(GoodInfo.create(2, "Firewood", ImmutableList.of(GoodTag.FUEL)));
+        goods.add(GoodInfo.create(3, "Sparkling Gem", ImmutableList.of(GoodTag.LUXURY)));
+        goods.add(GoodInfo.create(4, "Potato", ImmutableList.of(GoodTag.FOOD)));
+
+        return goods;
+    }
+
 }

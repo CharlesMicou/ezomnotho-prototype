@@ -1,6 +1,9 @@
 package agent;
 
+import agent.inventory.Inventory;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import goods.GoodInfoDatabase;
 import market.TradeOffer;
 import market.TradeResponse;
 import market.TradeResult;
@@ -9,13 +12,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AgentImpl implements Agent {
 
-    private ConcurrentHashMap<Integer, Integer> ownedGoods;
-    private double ownedMoney;
+    private Inventory inventory;
+    private GoodInfoDatabase goodInfoDatabase;
 
-    public AgentImpl(double initialMoney){
-        this.ownedMoney = initialMoney;
-        this.ownedGoods = new ConcurrentHashMap<>();
-    };
+    public AgentImpl(double initialMoney, GoodInfoDatabase goodInfoDatabase) {
+        this.goodInfoDatabase = goodInfoDatabase;
+        this.inventory = new Inventory(initialMoney, ImmutableMap.of(), goodInfoDatabase);
+    }
 
 
     @Override
@@ -35,13 +38,13 @@ public class AgentImpl implements Agent {
 
     @Override
     public void sellGoodsTo(int goodId, int quantity, double pricePerItem) {
-        ownedGoods.compute(goodId, (k, v) -> v == null ? quantity : v + quantity);
-        ownedMoney -= pricePerItem * quantity;
+        inventory.addGoods(goodId, quantity);
+        inventory.removeMoney(pricePerItem * quantity);
     }
 
     @Override
     public void buyGoodsFrom(int goodId, int quantity, double pricePerItem) {
-        ownedGoods.compute(goodId, (k, v) -> v == null ? 0 : v + quantity);
-        ownedMoney -= pricePerItem * quantity;
+        inventory.removeGoods(goodId, quantity);
+        inventory.addMoney(pricePerItem * quantity);
     }
 }

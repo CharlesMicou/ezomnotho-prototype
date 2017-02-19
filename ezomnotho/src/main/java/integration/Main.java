@@ -5,12 +5,15 @@ import agent.valuation.FixedVarianceNormalDistributionValuationStrategy;
 import agent.valuation.LearnedNormalDistributionValuationStrategy;
 import agent.valuation.ValuationStrategy;
 import com.google.common.collect.ImmutableMap;
+import goods.GoodInfoDatabase;
 import market.TradeResult;
 
 public class Main {
     public static void main(String [] args) {
         int goodId = 1234;
         int history = 1000;
+
+        GoodInfoDatabase.create();
 
         ValuationStrategy learnedStrategy = new LearnedNormalDistributionValuationStrategy(goodId, history);
 

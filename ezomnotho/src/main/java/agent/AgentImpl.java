@@ -2,7 +2,7 @@ package agent;
 
 import agent.inventory.Inventory;
 import agent.production.ProductionCapability;
-import agent.valuation.ValuationStrategy;
+import agent.valuation.strategy.ValuationStrategy;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import goods.GoodInfoDatabase;

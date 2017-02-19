@@ -1,7 +1,9 @@
-package agent.valuation;
+package agent.valuation.strategy;
 
 import com.google.common.collect.ImmutableMap;
 import market.TradeResult;
+
+import java.util.List;
 
 /**
  * A Composite Valuation Strategy takes several existing weighting strategies and combines them
@@ -12,9 +14,15 @@ public class CompositeValuationStrategy implements ValuationStrategy {
     private final ImmutableMap<Double, ValuationStrategy> weightedStrategies;
     private final int goodId;
 
-    public CompositeValuationStrategy(int goodId,ImmutableMap<Double, ValuationStrategy> weightedStrategies) {
+    public CompositeValuationStrategy(int goodId, ImmutableMap<Double, ValuationStrategy> weightedStrategies) {
         this.weightedStrategies = normaliseWeightings(weightedStrategies);
         this.goodId = goodId;
+    }
+
+    public static CompositeValuationStrategy uniformStrategy(int goodId, List<ValuationStrategy> strategies) {
+        ImmutableMap.Builder<Double, ValuationStrategy> builder = ImmutableMap.builder();
+        strategies.forEach(strategy -> builder.put(1.0, strategy));
+        return new CompositeValuationStrategy(goodId, builder.build());
     }
 
     @Override
@@ -45,7 +53,7 @@ public class CompositeValuationStrategy implements ValuationStrategy {
             ImmutableMap<Double, ValuationStrategy> initial) {
         final double sumOfWeights = initial.keySet().stream().reduce(0.0, (a, b) -> a + b);
         ImmutableMap.Builder<Double, ValuationStrategy> builder = ImmutableMap.builder();
-        initial.entrySet().forEach(entry -> builder.put(entry.getKey()/sumOfWeights, entry.getValue()));
+        initial.entrySet().forEach(entry -> builder.put(entry.getKey() / sumOfWeights, entry.getValue()));
         return builder.build();
     }
 }

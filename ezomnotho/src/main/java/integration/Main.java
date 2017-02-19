@@ -1,9 +1,9 @@
 package integration;
 
-import agent.valuation.CompositeValuationStrategy;
-import agent.valuation.FixedVarianceNormalDistributionValuationStrategy;
-import agent.valuation.LearnedNormalDistributionValuationStrategy;
-import agent.valuation.ValuationStrategy;
+import agent.valuation.strategy.CompositeValuationStrategy;
+import agent.valuation.strategy.FixedVarianceNormalDistributionValuationStrategy;
+import agent.valuation.strategy.LearnedNormalDistributionValuationStrategy;
+import agent.valuation.strategy.ValuationStrategy;
 import com.google.common.collect.ImmutableMap;
 import goods.GoodInfoDatabase;
 import market.TradeResult;

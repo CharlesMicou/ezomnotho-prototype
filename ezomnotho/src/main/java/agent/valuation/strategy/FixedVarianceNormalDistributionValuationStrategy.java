@@ -1,4 +1,4 @@
-package agent.valuation;
+package agent.valuation.strategy;
 
 import market.TradeResult;
 import org.apache.commons.math3.distribution.NormalDistribution;

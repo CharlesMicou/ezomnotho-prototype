@@ -1,42 +1,44 @@
-package agent.valuation.strategy;
+package agent.valuation.strategy.gaussian;
 
+import agent.valuation.strategy.ValuationStrategy;
 import market.TradeResult;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.random.RandomGenerator;
 import util.BoundedCounter;
 
-public class LearnedNormalDistributionValuationStrategy implements ValuationStrategy {
-
+public class FixedVarianceNormalDistributionValuationStrategy implements ValuationStrategy {
     private final int goodId;
     private final BoundedCounter numberOfSamples;
     private final RandomGenerator rng;
     private double mean;
-    private double variance;
+    private final double breadth; // the breadth defines the fraction of the mean value to make the standard deviation
 
-    public LearnedNormalDistributionValuationStrategy(int goodId, int maxSamplesToRemember) {
+    public FixedVarianceNormalDistributionValuationStrategy(int goodId, int maxSamplesToRemember, double breadth) {
         this.goodId = goodId;
         this.numberOfSamples = BoundedCounter.create(maxSamplesToRemember);
         this.rng = null; // We're not sampling, so no need to incur initialization overhead
+        this.breadth = breadth;
+        // need to initialise mean
     }
 
     @Override
     public double valueItem(double percentile) {
         if (percentile <= 0) return 0;
-        if (variance == 0) {
+        if (sd() == 0) {
             return mean;
         }
-        return new NormalDistribution(rng, mean, Math.sqrt(variance)).inverseCumulativeProbability(percentile);
+        return new NormalDistribution(rng, mean, sd()).inverseCumulativeProbability(percentile);
     }
 
     @Override
     public double probabilityOfGoodTrade(double offeredPrice) {
         if (offeredPrice <= 0) return 0;
-        if (variance == 0) {
+        if (sd() == 0) {
             if (offeredPrice > mean) {
                 return 0;
             } else return 1;
         }
-        return (1.0 - new NormalDistribution(rng, mean, Math.sqrt(variance)).cumulativeProbability(offeredPrice));
+        return (1.0 - new NormalDistribution(rng, mean, sd()).cumulativeProbability(offeredPrice));
     }
 
     @Override
@@ -49,7 +51,6 @@ public class LearnedNormalDistributionValuationStrategy implements ValuationStra
         if (result.goodId == goodId) {
             numberOfSamples.inc(result.quantityTraded);
             updateMean(result.pricePerItem, result.quantityTraded);
-            updateVariance(result.pricePerItem, result.quantityTraded);
         }
     }
 
@@ -58,8 +59,7 @@ public class LearnedNormalDistributionValuationStrategy implements ValuationStra
         mean = mean * (n - sampleCount) / n + newSample * sampleCount / n;
     }
 
-    private void updateVariance(double newSample, int sampleCount) {
-        int n = numberOfSamples.get();
-        variance = variance * (n - sampleCount) / n + Math.pow((newSample - mean), 2) * sampleCount / n;
+    private double sd() {
+        return mean * breadth;
     }
 }

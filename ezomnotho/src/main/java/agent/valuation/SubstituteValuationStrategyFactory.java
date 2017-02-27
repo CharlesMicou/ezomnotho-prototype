@@ -12,11 +12,11 @@ import goods.GoodTag;
  */
 public class SubstituteValuationStrategyFactory implements ValuationStrategyFactory {
 
-    // WARNING: underlying valuation strategies shouldn't in turn have substitution strategies that require this one
-    // otherwise we end up in cyclical hell.
-    // maybe there's an approximate way to do it?
+    // WARNING: underlying strategies may not contain substitute strategies themselves.
 
     private final GoodInfoDatabase goodInfoDatabase;
+
+    //todo: make this take a map of existing valuation strategies.
     private final ValuationStrategyFactory underlyingFactory;
 
     public SubstituteValuationStrategyFactory(int goodId,

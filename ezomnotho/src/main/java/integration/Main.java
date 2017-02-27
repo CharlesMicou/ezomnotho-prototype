@@ -1,8 +1,8 @@
 package integration;
 
 import agent.valuation.strategy.CompositeValuationStrategy;
-import agent.valuation.strategy.FixedVarianceNormalDistributionValuationStrategy;
-import agent.valuation.strategy.LearnedNormalDistributionValuationStrategy;
+import agent.valuation.strategy.gaussian.FixedVarianceNormalDistributionValuationStrategy;
+import agent.valuation.strategy.gaussian.LearnedNormalDistributionValuationStrategy;
 import agent.valuation.strategy.ValuationStrategy;
 import com.google.common.collect.ImmutableMap;
 import goods.GoodInfoDatabase;
@@ -35,5 +35,8 @@ public class Main {
         overallStrategy.processTradeResult(trade3);
         System.out.println(overallStrategy.valueItem(0.6));
     }
+
+    // initialize agents
+    // make a new marketplace
 
 }

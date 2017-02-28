@@ -18,6 +18,7 @@ public class SimpleAverageMean implements GaussianMeanProvider {
 
     @Override
     public void updateMean(TradeResult result) {
+        numberOfSamples.inc();
         int numberTraded = result.quantityTraded;
         double priceTraded = result.pricePerItem;
         int n = numberOfSamples.get();

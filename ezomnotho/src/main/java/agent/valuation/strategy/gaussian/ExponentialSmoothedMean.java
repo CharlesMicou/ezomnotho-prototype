@@ -12,18 +12,22 @@ public class ExponentialSmoothedMean implements GaussianMeanProvider {
     private double mean;
 
     ExponentialSmoothedMean(double alpha) {
+        if (alpha > 1 || alpha < 0) {
+            throw new java.lang.IllegalArgumentException("Tried to make exponential smoothing with alpha " + alpha);
+        }
+
         this.alpha = alpha;
         this.mean = 0;
     }
 
     @Override
     public void updateMean(TradeResult result) {
-        //TODO
-        // to do this for multiple trades I'm going to need to do a derivation of this by hand
+        double scaling = Math.pow((1-alpha), result.quantityTraded);
+        mean = (1 - scaling) * result.pricePerItem + scaling * mean;
     }
 
     @Override
     public double getMean() {
-        return 0;
+        return mean;
     }
 }

@@ -8,11 +8,13 @@ package market;
 public class TradeResult {
     public final int goodId;
     public final int quantityOffered;
+    public final int quantityDesired;
     public final int quantityTraded;
     public final double pricePerItem;
 
-    public TradeResult(int goodId, int quantityOffered, int quantityTraded, double pricePerItem) {
+    public TradeResult(int goodId, int quantityOffered, int quantityTraded, int quantityDesired, double pricePerItem) {
         this.goodId = goodId;
+        this.quantityDesired = quantityDesired;
         this.quantityOffered = quantityOffered;
         this.quantityTraded = quantityTraded;
         this.pricePerItem = pricePerItem;

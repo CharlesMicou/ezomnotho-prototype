@@ -35,9 +35,11 @@ public class TradeOffer {
         for (TradeResponse response : responses) {
             desiredQuantity += response.quantity;
             int tradeQuantity = Math.min(remainingQuantity, response.quantity);
-            AtomicTrade.makeTrade(response.agent, creator, goodId, tradeQuantity, pricePerItem);
+            if (tradeQuantity != 0) {
+                AtomicTrade.makeTrade(response.agent, creator, goodId, tradeQuantity, pricePerItem);
+            }
         }
 
-        return new TradeResult(goodId, initialQuantity, desiredQuantity, pricePerItem);
+        return new TradeResult(goodId, initialQuantity, initialQuantity - remainingQuantity, desiredQuantity, pricePerItem);
     }
 }

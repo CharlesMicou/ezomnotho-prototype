@@ -6,6 +6,7 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.random.RandomGenerator;
 import util.BoundedCounter;
 
+@Deprecated
 public class FixedVarianceNormalDistributionValuationStrategy implements ValuationStrategy {
     private final int goodId;
     private final BoundedCounter numberOfSamples;

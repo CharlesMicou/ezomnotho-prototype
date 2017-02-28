@@ -9,6 +9,7 @@ import org.apache.commons.math3.random.RandomGenerator;
  * This makes the assumption that the certainty of the agent about a value of a good at any given point in
  * time is normally distributed. The agent adapts the variance and mean of the distribution as it observes
  * trades.
+ * Todo: use the TruncatedGaussian instead.
  */
 public class GaussianValuationStrategy implements ValuationStrategy {
 

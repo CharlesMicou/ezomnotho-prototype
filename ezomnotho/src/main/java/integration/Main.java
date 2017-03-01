@@ -9,7 +9,7 @@ import goods.GoodInfoDatabase;
 import market.TradeResult;
 
 public class Main {
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         int goodId = 1234;
         int history = 1000;
 
@@ -24,9 +24,9 @@ public class Main {
         ValuationStrategy overallStrategy = new CompositeValuationStrategy(goodId, composite);
 
 
-        TradeResult trade1 = new TradeResult(goodId, 100, 1, 50);
-        TradeResult trade2 = new TradeResult(goodId, 250, 3, 30);
-        TradeResult trade3 = new TradeResult(goodId, 100, 5, 60);
+        TradeResult trade1 = new TradeResult(goodId, 100, 1, 1, 50);
+        TradeResult trade2 = new TradeResult(goodId, 250, 3, 1, 30);
+        TradeResult trade3 = new TradeResult(goodId, 100, 5, 1, 60);
 
         overallStrategy.processTradeResult(trade1);
         System.out.println(overallStrategy.valueItem(0.98));

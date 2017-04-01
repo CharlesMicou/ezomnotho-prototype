@@ -1,10 +1,10 @@
-package agent.production;
+package agent.production.capability;
 
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class SimpleProductionImpl implements ProductionCapability {
+public class SimpleProductionCapabilityImpl implements ProductionCapability {
 
     private final int producedGood;
     private final ImmutableMap<Integer, Integer> requiredGoods;
@@ -14,19 +14,19 @@ public class SimpleProductionImpl implements ProductionCapability {
      * This is very basic production. A constant number of ingredients go into making a single item.
      * There are no modifiers or anything fancy.
      */
-    private SimpleProductionImpl(int producedGood, ImmutableMap<Integer, Integer> requiredGoods) {
+    private SimpleProductionCapabilityImpl(int producedGood, ImmutableMap<Integer, Integer> requiredGoods) {
         this.producedGood = producedGood;
         this.requiredGoods = requiredGoods;
     }
 
-    public static SimpleProductionImpl create(int producedGood, ImmutableMap<Integer, Integer> requiredGoods) {
+    public static SimpleProductionCapabilityImpl create(int producedGood, ImmutableMap<Integer, Integer> requiredGoods) {
         for (int quantity : requiredGoods.values()) {
             if (quantity < 1) {
                 throw new IllegalArgumentException("Tried to create a production impl for good " + producedGood +
                 " with a required ingredient quantity of less than one.");
             }
         }
-        return new SimpleProductionImpl(producedGood, requiredGoods);
+        return new SimpleProductionCapabilityImpl(producedGood, requiredGoods);
     }
 
     @Override

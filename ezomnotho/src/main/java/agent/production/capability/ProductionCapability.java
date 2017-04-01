@@ -1,4 +1,4 @@
-package agent.production;
+package agent.production.capability;
 
 import com.google.common.collect.ImmutableMap;
 

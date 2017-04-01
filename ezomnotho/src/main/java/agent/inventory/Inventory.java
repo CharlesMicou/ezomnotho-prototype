@@ -33,6 +33,10 @@ public class Inventory {
         return ownedGoods.get(goodId);
     }
 
+    public ImmutableMap<Integer, Integer> getAllGoods() {
+        return ImmutableMap.copyOf(ownedGoods);
+    }
+
     public void removeMoney(double money) {
         addMoney(-money);
     }

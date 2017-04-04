@@ -5,7 +5,6 @@ import agent.production.ProductionOrder;
 import agent.production.capability.ProductionCapability;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import goods.GoodInfoDatabase;
 
 import java.util.*;
 
@@ -38,7 +37,7 @@ public class RandomProductionStrategy implements ProductionStrategy {
                 int numberToMake = random.nextInt(available + 1);
                 ImmutableMap<Integer, Integer> costIncurred = capability.costToProduce(numberToMake);
                 ordersToMake.add(new ProductionOrder(
-                        ImmutableMap.of(capability.producedGood(), numberToMake), costIncurred));
+                        ImmutableMap.of(capability.producedGoodId(), numberToMake), costIncurred));
                 // update the goods
                 costIncurred.entrySet().forEach(
                         entry -> remainingGoods.put(

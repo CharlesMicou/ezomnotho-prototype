@@ -9,7 +9,6 @@ public class SimpleProductionCapabilityImpl implements ProductionCapability {
     private final int producedGood;
     private final ImmutableMap<Integer, Integer> requiredGoods;
 
-
     /**
      * This is very basic production. A constant number of ingredients go into making a single item.
      * There are no modifiers or anything fancy.
@@ -30,7 +29,7 @@ public class SimpleProductionCapabilityImpl implements ProductionCapability {
     }
 
     @Override
-    public int producedGood() {
+    public int producedGoodId() {
         return producedGood;
     }
 
@@ -52,8 +51,6 @@ public class SimpleProductionCapabilityImpl implements ProductionCapability {
             int required = availableGoods.get(requiredGoodAndQuantity.getKey()) / requiredGoodAndQuantity.getValue();
             quantityAvailable = Math.min(quantityAvailable, required);
         }
-
-
         return quantityAvailable;
     }
 }

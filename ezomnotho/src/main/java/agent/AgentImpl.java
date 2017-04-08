@@ -1,5 +1,6 @@
 package agent;
 
+import agent.demand.DemandModel;
 import agent.inventory.Inventory;
 import agent.production.ProductionOrder;
 import agent.production.capability.ProductionCapability;
@@ -13,6 +14,11 @@ import market.TradeOffer;
 import market.TradeResponse;
 import market.TradeResult;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
+
 import static goods.GoodId.TIME;
 
 public class AgentImpl implements Agent {
@@ -21,35 +27,66 @@ public class AgentImpl implements Agent {
     private final ImmutableList<ProductionCapability> productionCapabilities;
     private final ProductionStrategy productionStrategy;
     private final ImmutableMap<GoodId, ValuationStrategy> valuationStrategies;
+    private final DemandModel demandModel;
+    private Random random;
     private static final int TIME_PER_PRODUCTION_CYCLE = 10;
 
     public AgentImpl(double initialMoney,
                      GoodInfoDatabase goodInfoDatabase,
                      ImmutableList<ProductionCapability> productionCapabilities,
                      ImmutableMap<GoodId, ValuationStrategy> valuationStrategies,
-                     ProductionStrategy productionStrategy) {
+                     ProductionStrategy productionStrategy,
+                     DemandModel demandModel) {
         this.goodInfoDatabase = goodInfoDatabase;
         this.inventory = new Inventory(initialMoney, ImmutableMap.of(), goodInfoDatabase);
         this.productionCapabilities = productionCapabilities;
         this.valuationStrategies = valuationStrategies;
         this.productionStrategy = productionStrategy;
+        this.demandModel = demandModel;
+        this.random = new Random();
     }
 
 
     @Override
     public ImmutableList<TradeOffer> createTradeOffers() {
         // Valuation strategy: How much are the goods worth to us?
-        // Demand strategy: Which goods are worth more on the market than they are to us?
+        // DemandModel strategy: Which goods are worth more on the market than they are to us?
+        //TODO: Better logic for which goods to actually put up for sale
+        Map<GoodId, Integer> itemsToSell = inventory.getAllGoods().entrySet().stream()
+                .filter(entry -> entry.getValue() < 1)
+                .filter(
+                        entry -> {
+                            GoodId goodId = entry.getKey();
+                            double ourDesire = valuationStrategies.get(goodId).valueItem(demandModel.needForGood(goodId));
+                            double marketDesire = valuationStrategies.get(goodId).valueItem(0.5);
+                            return ourDesire < marketDesire;
+                        })
+                .collect(Collectors.toMap(Map.Entry::getKey, entry ->  random.nextInt(entry.getValue() + 1)));
         // Sell Decision strategy: Produce a shortlist of the above, ranked by most lucrative.
-        return null;
+        // Todo: for now we'll do all for them
+        return ImmutableList.copyOf(itemsToSell.entrySet().stream()
+                .map(entry -> new TradeOffer(
+                        entry.getKey(),
+                        valuationStrategies.get(entry.getKey()).valueItem(0.5),
+                        entry.getValue(),
+                        this))
+                .collect(Collectors.toList()));
     }
 
     @Override
     public TradeResponse processOffer(TradeOffer offer) {
-        // Demand strategy: how much do we need the good?
-        // Valuation strategy: how much do we think the good is worth?
-        // Buy Decision strategy: should we take the trade? and if so, how much?
-        return null;
+        //TODO: Logic for determining how many we should buy
+
+        // Use our valuation strategy for the good to determine what the value of the good is with respect
+        // to how much our demand strategy says we want it.
+        double perceivedValue = valuationStrategies.get(offer.goodId).valueItem(demandModel.needForGood(offer.goodId));
+        if (offer.pricePerItem <= perceivedValue) {
+            // for the moment, buy a random number that we can afford
+            int toBuy = random.nextInt((int) Math.ceil(inventory.getOwnedMoney() / offer.pricePerItem));
+            return new TradeResponse(this, toBuy);
+        } else {
+            return new TradeResponse(this, 0);
+        }
     }
 
     @Override

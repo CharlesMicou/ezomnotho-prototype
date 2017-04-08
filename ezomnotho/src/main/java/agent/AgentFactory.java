@@ -14,7 +14,7 @@ public class AgentFactory {
     // consumes food, fuel, leisure
 
     // miner
-    // produces coal, stone
+    // produces coal, stone, sometimes gems
     // --
 
     // farmer:

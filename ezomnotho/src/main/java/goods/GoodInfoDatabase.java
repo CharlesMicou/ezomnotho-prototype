@@ -8,15 +8,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static goods.GoodName.*;
+
 public class GoodInfoDatabase {
 
     private ImmutableMap<GoodTag, ImmutableList<Integer>> tagToIds;
     private ImmutableMap<Integer, GoodInfo> goodIdToInfo;
-    private ImmutableMap<String, Integer> friendlyNameMapping;
+    private ImmutableMap<GoodName, Integer> friendlyNameMapping;
 
     private GoodInfoDatabase(ImmutableMap<Integer, GoodInfo> goodIdToInfo,
                              ImmutableMap<GoodTag, ImmutableList<Integer>> tagToIds,
-                             ImmutableMap<String, Integer> friendlyNameMapping) {
+                             ImmutableMap<GoodName, Integer> friendlyNameMapping) {
         this.tagToIds = tagToIds;
         this.goodIdToInfo = goodIdToInfo;
         this.friendlyNameMapping = friendlyNameMapping;
@@ -48,7 +50,7 @@ public class GoodInfoDatabase {
          */
         List<GoodInfo> goodsToAdd = makeGoods();
 
-        Map<String, Integer> tempNameToId = new HashMap<>();
+        Map<GoodName, Integer> tempNameToId = new HashMap<>();
         Map<GoodTag, List<Integer>> tempTagToIds = new HashMap<>();
         Map<Integer, GoodInfo> tempIdToInfo = new HashMap<>();
 
@@ -79,12 +81,20 @@ public class GoodInfoDatabase {
         List<GoodInfo> goods = new ArrayList<>();
 
         // YEAAAAH
-        goods.add(GoodInfo.createSpecial(TIME_GOOD_ID, "Time", ImmutableList.of(), ImmutableList.of(SpecialGoodProperties.UNTRADEABLE)));
+        goods.add(GoodInfo.createSpecial(TIME_GOOD_ID, TIME, ImmutableList.of(), ImmutableList.of(SpecialGoodProperties.UNTRADEABLE)));
 
-        goods.add(GoodInfo.create(1, "Fish", ImmutableList.of(GoodTag.FOOD)));
-        goods.add(GoodInfo.create(2, "Firewood", ImmutableList.of(GoodTag.FUEL)));
-        goods.add(GoodInfo.create(3, "Sparkling Gem", ImmutableList.of(GoodTag.LUXURY)));
-        goods.add(GoodInfo.create(4, "Potato", ImmutableList.of(GoodTag.FOOD)));
+        // todo: make id assignment automatic because this is embarrassing
+        // in fact just factor out goodids entirely
+        goods.add(GoodInfo.create(1, FISH, ImmutableList.of(GoodTag.FOOD)));
+        goods.add(GoodInfo.create(2, WOOD, ImmutableList.of(GoodTag.FUEL)));
+        goods.add(GoodInfo.create(3, GEM, ImmutableList.of(GoodTag.LUXURY)));
+        goods.add(GoodInfo.create(4, CABBAGE, ImmutableList.of(GoodTag.FOOD)));
+        goods.add(GoodInfo.create(5, COAL, ImmutableList.of(GoodTag.FUEL)));
+        goods.add(GoodInfo.create(6, POETRY, ImmutableList.of(GoodTag.ENTERTAINMENT)));
+        goods.add(GoodInfo.create(7, SALMON_MEUNIERE, ImmutableList.of(GoodTag.LUXURY, GoodTag.FOOD)));
+        goods.add(GoodInfo.create(8, SAUERKRAUT, ImmutableList.of(GoodTag.LUXURY, GoodTag.FOOD)));
+        goods.add(GoodInfo.create(9, RING, ImmutableList.of(GoodTag.LUXURY)));
+        goods.add(GoodInfo.create(10, WOODEN_HORSE, ImmutableList.of(GoodTag.LUXURY, GoodTag.ENTERTAINMENT)));
 
         return goods;
     }

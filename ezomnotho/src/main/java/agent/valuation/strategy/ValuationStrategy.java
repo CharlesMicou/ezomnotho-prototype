@@ -1,5 +1,6 @@
 package agent.valuation.strategy;
 
+import goods.GoodId;
 import market.TradeResult;
 
 public interface ValuationStrategy {
@@ -32,5 +33,5 @@ public interface ValuationStrategy {
      * all goods. Therefore, all ValuationStrategies need to be aware of which good they are evaluating.
      * @return the good id of the valuated good
      */
-    int getGoodId();
+    GoodId getGoodId();
 }

@@ -1,6 +1,7 @@
 package agent.valuation.strategy.gaussian;
 
 import agent.valuation.strategy.ValuationStrategy;
+import goods.GoodId;
 import market.TradeResult;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.random.RandomGenerator;
@@ -9,13 +10,13 @@ import util.BoundedCounter;
 @Deprecated
 public class LearnedNormalDistributionValuationStrategy implements ValuationStrategy {
 
-    private final int goodId;
+    private final GoodId goodId;
     private final BoundedCounter numberOfSamples;
     private final RandomGenerator rng;
     private double mean;
     private double variance;
 
-    public LearnedNormalDistributionValuationStrategy(int goodId, int maxSamplesToRemember) {
+    public LearnedNormalDistributionValuationStrategy(GoodId goodId, int maxSamplesToRemember) {
         this.goodId = goodId;
         this.numberOfSamples = BoundedCounter.create(maxSamplesToRemember);
         this.rng = null; // We're not sampling, so no need to incur initialization overhead
@@ -43,7 +44,7 @@ public class LearnedNormalDistributionValuationStrategy implements ValuationStra
     }
 
     @Override
-    public int getGoodId() {
+    public GoodId getGoodId() {
         return goodId;
     }
 

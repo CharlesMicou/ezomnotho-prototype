@@ -1,6 +1,6 @@
 package goods;
 
-public enum GoodName {
+public enum GoodId {
     TIME,
     FISH,
     WOOD,

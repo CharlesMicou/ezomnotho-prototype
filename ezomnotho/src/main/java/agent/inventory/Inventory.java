@@ -1,6 +1,7 @@
 package agent.inventory;
 
 import com.google.common.collect.ImmutableMap;
+import goods.GoodId;
 import goods.GoodInfoDatabase;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -8,13 +9,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Inventory {
 
     private GoodInfoDatabase goodInfoDatabase;
-    private ConcurrentHashMap<Integer, Integer> ownedGoods;
+    private ConcurrentHashMap<GoodId, Integer> ownedGoods;
 
 
     private double ownedMoney;
 
     public Inventory(double initialMoney,
-                     ImmutableMap<Integer, Integer> initialInventory,
+                     ImmutableMap<GoodId, Integer> initialInventory,
                      GoodInfoDatabase goodInfoDatabase){
         this.ownedMoney = initialMoney;
         this.ownedGoods = new ConcurrentHashMap<>();
@@ -29,11 +30,11 @@ public class Inventory {
         return ownedMoney;
     }
 
-    public int getQuantityOfGood(int goodId) {
+    public int getQuantityOfGood(GoodId goodId) {
         return ownedGoods.get(goodId);
     }
 
-    public ImmutableMap<Integer, Integer> getAllGoods() {
+    public ImmutableMap<GoodId, Integer> getAllGoods() {
         return ImmutableMap.copyOf(ownedGoods);
     }
 
@@ -45,11 +46,11 @@ public class Inventory {
         ownedMoney += money;
     }
 
-    public void addGoods(int goodId, int quantity) {
+    public void addGoods(GoodId goodId, int quantity) {
         ownedGoods.put(goodId, ownedGoods.get(goodId) + quantity);
     }
 
-    public void removeGoods(int goodId, int quantity) {
+    public void removeGoods(GoodId goodId, int quantity) {
         addGoods(goodId, -quantity);
     }
 

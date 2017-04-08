@@ -1,9 +1,10 @@
 package agent.valuation;
 
 import agent.valuation.strategy.ValuationStrategy;
+import goods.GoodId;
 
 public interface ValuationStrategyFactory {
 
-    ValuationStrategy makeStrategyFor(int goodId);
+    ValuationStrategy makeStrategyFor(GoodId goodId);
 
 }

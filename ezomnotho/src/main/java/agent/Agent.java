@@ -1,6 +1,7 @@
 package agent;
 
 import com.google.common.collect.ImmutableList;
+import goods.GoodId;
 import market.TradeOffer;
 import market.TradeResponse;
 import market.TradeResult;
@@ -36,7 +37,7 @@ public interface Agent {
      * @param quantity the number of goods being traded.
      * @param pricePerItem the price paid per good.
      */
-    void sellGoodsTo(int goodId, int quantity, double pricePerItem);
+    void sellGoodsTo(GoodId goodId, int quantity, double pricePerItem);
 
     /**
      * Buy goods from the agent.
@@ -44,7 +45,7 @@ public interface Agent {
      * @param quantity the number of goods being traded.
      * @param pricePerItem the price paid per good.
      */
-    void buyGoodsFrom(int goodId, int quantity, double pricePerItem);
+    void buyGoodsFrom(GoodId goodId, int quantity, double pricePerItem);
 
     /**
      *  The agent performs its actions for the production cycle.

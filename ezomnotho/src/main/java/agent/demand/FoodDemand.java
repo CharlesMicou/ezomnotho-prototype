@@ -1,5 +1,6 @@
 package agent.demand;
 
+import goods.GoodId;
 import goods.GoodTag;
 
 public class FoodDemand implements Demand {
@@ -14,7 +15,7 @@ public class FoodDemand implements Demand {
     }
 
     @Override
-    public double needForGood(int goodId) {
+    public double needForGood(GoodId goodId) {
         return 0;
     }
 }

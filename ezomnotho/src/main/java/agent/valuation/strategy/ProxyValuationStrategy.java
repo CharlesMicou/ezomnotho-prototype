@@ -1,5 +1,6 @@
 package agent.valuation.strategy;
 
+import goods.GoodId;
 import market.TradeResult;
 
 /**
@@ -30,7 +31,7 @@ public class ProxyValuationStrategy implements ValuationStrategy {
     }
 
     @Override
-    public int getGoodId() {
+    public GoodId getGoodId() {
         return underlyingStrategy.getGoodId();
     }
 }

@@ -1,6 +1,7 @@
 package agent.valuation.strategy.gaussian;
 
 import agent.valuation.strategy.ValuationStrategy;
+import goods.GoodId;
 import market.TradeResult;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.random.RandomGenerator;
@@ -13,12 +14,12 @@ import org.apache.commons.math3.random.RandomGenerator;
  */
 public class GaussianValuationStrategy implements ValuationStrategy {
 
-    private final int goodId;
+    private final GoodId goodId;
     private final RandomGenerator rng;
     private final GaussianMeanProvider meanProvider;
     private final GaussianVarianceProvider varianceProvider;
 
-    public GaussianValuationStrategy(int goodId,
+    public GaussianValuationStrategy(GoodId goodId,
                                      GaussianMeanProvider meanProvider,
                                      GaussianVarianceProvider varianceProvider) {
         this.goodId = goodId;
@@ -59,7 +60,7 @@ public class GaussianValuationStrategy implements ValuationStrategy {
     }
 
     @Override
-    public int getGoodId() {
+    public GoodId getGoodId() {
         return goodId;
     }
 }

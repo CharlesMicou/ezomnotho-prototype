@@ -1,5 +1,7 @@
 package agent.demand;
 
+import goods.GoodId;
+
 public interface Demand {
 
 
@@ -10,6 +12,6 @@ public interface Demand {
      * @param goodId the good we express the need for.
      * @return a value between 0 and 1. 0 is no need for the good, 1 will take any offer of the good.
      */
-    double needForGood(int goodId);
+    double needForGood(GoodId goodId);
 
 }

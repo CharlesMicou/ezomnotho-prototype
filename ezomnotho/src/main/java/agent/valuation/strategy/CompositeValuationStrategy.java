@@ -1,6 +1,7 @@
 package agent.valuation.strategy;
 
 import com.google.common.collect.ImmutableMap;
+import goods.GoodId;
 import market.TradeResult;
 
 import java.util.List;
@@ -12,21 +13,21 @@ import java.util.List;
  */
 public class CompositeValuationStrategy implements ValuationStrategy {
     private final ImmutableMap<Double, ValuationStrategy> weightedStrategies;
-    private final int goodId;
+    private final GoodId goodId;
 
-    public CompositeValuationStrategy(int goodId, ImmutableMap<Double, ValuationStrategy> weightedStrategies) {
+    public CompositeValuationStrategy(GoodId goodId, ImmutableMap<Double, ValuationStrategy> weightedStrategies) {
         this.weightedStrategies = normaliseWeightings(weightedStrategies);
         this.goodId = goodId;
     }
 
-    public static CompositeValuationStrategy uniformStrategy(int goodId, List<ValuationStrategy> strategies) {
+    public static CompositeValuationStrategy uniformStrategy(GoodId goodId, List<ValuationStrategy> strategies) {
         ImmutableMap.Builder<Double, ValuationStrategy> builder = ImmutableMap.builder();
         strategies.forEach(strategy -> builder.put(1.0, strategy));
         return new CompositeValuationStrategy(goodId, builder.build());
     }
 
     @Override
-    public int getGoodId() {
+    public GoodId getGoodId() {
         return goodId;
     }
 

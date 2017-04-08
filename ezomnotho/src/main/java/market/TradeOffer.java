@@ -1,20 +1,21 @@
 package market;
 
 import agent.Agent;
+import goods.GoodId;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class TradeOffer {
-    public final int goodId;
+    public final GoodId goodId;
     public final int initialQuantity;
     public final double pricePerItem;
     public final Agent creator;
     private int remainingQuantity;
     private List<TradeResponse> responses;
 
-    public TradeOffer(int goodId, double pricePerItem, int quantity, Agent creator) {
+    public TradeOffer(GoodId goodId, double pricePerItem, int quantity, Agent creator) {
         this.goodId = goodId;
         this.pricePerItem = pricePerItem;
         this.initialQuantity = quantity;

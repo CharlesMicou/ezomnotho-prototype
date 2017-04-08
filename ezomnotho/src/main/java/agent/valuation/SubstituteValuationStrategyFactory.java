@@ -3,6 +3,7 @@ package agent.valuation;
 import agent.valuation.strategy.CompositeValuationStrategy;
 import agent.valuation.strategy.ValuationStrategy;
 import com.google.common.collect.ImmutableList;
+import goods.GoodId;
 import goods.GoodInfoDatabase;
 import goods.GoodTag;
 
@@ -19,7 +20,7 @@ public class SubstituteValuationStrategyFactory implements ValuationStrategyFact
     //todo: make this take a map of existing valuation strategies.
     private final ValuationStrategyFactory underlyingFactory;
 
-    public SubstituteValuationStrategyFactory(int goodId,
+    public SubstituteValuationStrategyFactory(GoodId goodId,
                                               GoodInfoDatabase infoDatabase,
                                               ValuationStrategyFactory underlyingFactory) {
         this.goodInfoDatabase = infoDatabase;
@@ -28,7 +29,7 @@ public class SubstituteValuationStrategyFactory implements ValuationStrategyFact
 
 
     @Override
-    public ValuationStrategy makeStrategyFor(int goodId) {
+    public ValuationStrategy makeStrategyFor(GoodId goodId) {
         ImmutableList.Builder<ValuationStrategy> strategyBuilder = ImmutableList.builder();
 
         for (GoodTag tag : goodInfoDatabase.infoFor(goodId).tags) {

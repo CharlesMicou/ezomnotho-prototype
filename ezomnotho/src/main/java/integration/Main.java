@@ -5,12 +5,13 @@ import agent.valuation.strategy.gaussian.FixedVarianceNormalDistributionValuatio
 import agent.valuation.strategy.gaussian.LearnedNormalDistributionValuationStrategy;
 import agent.valuation.strategy.ValuationStrategy;
 import com.google.common.collect.ImmutableMap;
+import goods.GoodId;
 import goods.GoodInfoDatabase;
 import market.TradeResult;
 
 public class Main {
     public static void main(String[] args) {
-        int goodId = 1234;
+        GoodId goodId = GoodId.CABBAGE;
         int history = 1000;
 
         GoodInfoDatabase.create();

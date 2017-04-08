@@ -5,6 +5,7 @@ import agent.production.ProductionOrder;
 import agent.production.capability.ProductionCapability;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import goods.GoodId;
 
 import java.util.*;
 
@@ -23,7 +24,7 @@ public class RandomProductionStrategy implements ProductionStrategy {
 
     @Override
     public ImmutableList<ProductionOrder> makeProductionOrders(Inventory currentInventory) {
-        HashMap<Integer, Integer> remainingGoods = new HashMap<>();
+        HashMap<GoodId, Integer> remainingGoods = new HashMap<>();
         remainingGoods.putAll(currentInventory.getAllGoods());
         List<ProductionCapability> remainingCapabilities = new ArrayList<>();
         remainingCapabilities.addAll(productionCapabilities);
@@ -35,7 +36,7 @@ public class RandomProductionStrategy implements ProductionStrategy {
             int available = capability.maxQuantityAvailable(ImmutableMap.copyOf(remainingGoods));
             if (available > 0) {
                 int numberToMake = random.nextInt(available + 1);
-                ImmutableMap<Integer, Integer> costIncurred = capability.costToProduce(numberToMake);
+                ImmutableMap<GoodId, Integer> costIncurred = capability.costToProduce(numberToMake);
                 ordersToMake.add(new ProductionOrder(
                         ImmutableMap.of(capability.producedGoodId(), numberToMake), costIncurred));
                 // update the goods

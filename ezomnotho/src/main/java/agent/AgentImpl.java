@@ -23,7 +23,6 @@ import static goods.GoodId.TIME;
 
 public class AgentImpl implements Agent {
     private Inventory inventory;
-    private GoodInfoDatabase goodInfoDatabase;
     private final ImmutableList<ProductionCapability> productionCapabilities;
     private final ProductionStrategy productionStrategy;
     private final ImmutableMap<GoodId, ValuationStrategy> valuationStrategies;
@@ -37,7 +36,6 @@ public class AgentImpl implements Agent {
                      ImmutableMap<GoodId, ValuationStrategy> valuationStrategies,
                      ProductionStrategy productionStrategy,
                      DemandModel demandModel) {
-        this.goodInfoDatabase = goodInfoDatabase;
         this.inventory = new Inventory(initialMoney, ImmutableMap.of(), goodInfoDatabase);
         this.productionCapabilities = productionCapabilities;
         this.valuationStrategies = valuationStrategies;

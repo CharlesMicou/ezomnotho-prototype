@@ -11,9 +11,7 @@ public class DummyDemandModel implements DemandModel {
 
     Random random = new Random();
 
-    DummyDemandModel() {
-
-    }
+    public DummyDemandModel() {}
 
     @Override
     public double needForGood(GoodId goodId) {

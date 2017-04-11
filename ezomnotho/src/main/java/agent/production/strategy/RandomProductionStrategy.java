@@ -5,6 +5,7 @@ import agent.production.ProductionOrder;
 import agent.production.capability.ProductionCapability;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import goods.GoodId;
 
 import java.util.*;
@@ -17,7 +18,7 @@ public class RandomProductionStrategy implements ProductionStrategy {
     private final ImmutableList<ProductionCapability> productionCapabilities;
     private final Random random;
 
-    public RandomProductionStrategy(ImmutableList<ProductionCapability> productionCapabilities) {
+    public RandomProductionStrategy(ImmutableSet<ProductionCapability> productionCapabilities) {
         this.productionCapabilities = ImmutableList.copyOf(productionCapabilities);
         this.random = new Random();
     }

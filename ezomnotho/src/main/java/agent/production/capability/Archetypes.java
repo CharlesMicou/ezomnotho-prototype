@@ -12,6 +12,10 @@ public class Archetypes {
         return ImmutableSet.of(SimpleProductionCapabilityImpl.create(GoodId.FISH, ImmutableMap.of(GoodId.TIME, 5)));
     }
 
+    public static ImmutableSet<ProductionCapability> Farmer() {
+        return ImmutableSet.of(SimpleProductionCapabilityImpl.create(GoodId.CABBAGE, ImmutableMap.of(GoodId.TIME, 3)));
+    }
+
     public static ImmutableSet<ProductionCapability> Lumberjack() {
         return ImmutableSet.of(SimpleProductionCapabilityImpl.create(GoodId.WOOD, ImmutableMap.of(GoodId.TIME, 2)));
     }

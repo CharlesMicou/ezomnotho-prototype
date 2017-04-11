@@ -8,13 +8,13 @@ import agent.production.strategy.ProductionStrategy;
 import agent.valuation.strategy.ValuationStrategy;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import goods.GoodId;
 import goods.GoodInfoDatabase;
 import market.TradeOffer;
 import market.TradeResponse;
 import market.TradeResult;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -23,25 +23,28 @@ import static goods.GoodId.TIME;
 
 public class AgentImpl implements Agent {
     private Inventory inventory;
-    private final ImmutableList<ProductionCapability> productionCapabilities;
+    private final ImmutableSet<ProductionCapability> productionCapabilities;
     private final ProductionStrategy productionStrategy;
     private final ImmutableMap<GoodId, ValuationStrategy> valuationStrategies;
     private final DemandModel demandModel;
     private Random random;
     private static final int TIME_PER_PRODUCTION_CYCLE = 10;
+    public final String agentName;
 
     public AgentImpl(double initialMoney,
                      GoodInfoDatabase goodInfoDatabase,
-                     ImmutableList<ProductionCapability> productionCapabilities,
+                     ImmutableSet<ProductionCapability> productionCapabilities,
                      ImmutableMap<GoodId, ValuationStrategy> valuationStrategies,
                      ProductionStrategy productionStrategy,
-                     DemandModel demandModel) {
+                     DemandModel demandModel,
+                     String agentName) {
         this.inventory = new Inventory(initialMoney, ImmutableMap.of(), goodInfoDatabase);
         this.productionCapabilities = productionCapabilities;
         this.valuationStrategies = valuationStrategies;
         this.productionStrategy = productionStrategy;
         this.demandModel = demandModel;
         this.random = new Random();
+        this.agentName = agentName;
     }
 
 

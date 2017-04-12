@@ -48,6 +48,11 @@ public interface Agent {
     void buyGoodsFrom(GoodId goodId, int quantity, double pricePerItem);
 
     /**
+     * @return an identifier (name) of the agent
+     */
+    String id();
+
+    /**
      *  The agent performs its actions for the production cycle.
      */
     void produce();

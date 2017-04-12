@@ -49,6 +49,6 @@ public class RandomProductionStrategy implements ProductionStrategy {
                 remainingCapabilities.remove(i);
             }
         }
-        return null;
+        return ImmutableList.copyOf(ordersToMake);
     }
 }

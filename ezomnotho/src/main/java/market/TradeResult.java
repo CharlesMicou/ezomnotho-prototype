@@ -21,4 +21,15 @@ public class TradeResult {
         this.quantityTraded = quantityTraded;
         this.pricePerItem = pricePerItem;
     }
+
+    @Override
+    public String toString() {
+        return "TradeResult{" +
+            "goodId=" + goodId +
+            ", quantityOffered=" + quantityOffered +
+            ", quantityDesired=" + quantityDesired +
+            ", quantityTraded=" + quantityTraded +
+            ", pricePerItem=" + pricePerItem +
+            '}';
+    }
 }

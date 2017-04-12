@@ -43,4 +43,16 @@ public class TradeOffer {
 
         return new TradeResult(goodId, initialQuantity, initialQuantity - remainingQuantity, desiredQuantity, pricePerItem);
     }
+
+    @Override
+    public String toString() {
+        return "TradeOffer{" +
+            "\n\tgoodId=" + goodId +
+            "\n\tcreator=" + creator.id() +
+            "\n\tinitialQuantity=" + initialQuantity +
+            ", pricePerItem=" + String.format("%.2f", pricePerItem) +
+            ", remainingQuantity=" + remainingQuantity +
+            "\n\tresponses=" + responses +
+            '}';
+    }
 }

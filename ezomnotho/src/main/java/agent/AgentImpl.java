@@ -29,7 +29,7 @@ public class AgentImpl implements Agent {
     private final DemandModel demandModel;
     private Random random;
     private static final int TIME_PER_PRODUCTION_CYCLE = 10;
-    public final String agentName;
+    private final String agentName;
 
     public AgentImpl(double initialMoney,
                      GoodInfoDatabase goodInfoDatabase,
@@ -47,6 +47,10 @@ public class AgentImpl implements Agent {
         this.agentName = agentName;
     }
 
+    @Override
+    public String id() {
+        return agentName;
+    }
 
     @Override
     public ImmutableList<TradeOffer> createTradeOffers() {
@@ -54,7 +58,7 @@ public class AgentImpl implements Agent {
         // DemandModel strategy: Which goods are worth more on the market than they are to us?
         //TODO: Better logic for which goods to actually put up for sale
         Map<GoodId, Integer> itemsToSell = inventory.getAllGoods().entrySet().stream()
-                .filter(entry -> entry.getValue() < 1)
+                .filter(entry -> entry.getValue() > 1)
                 .filter(
                         entry -> {
                             GoodId goodId = entry.getKey();

@@ -18,11 +18,13 @@ public class Marketplace {
     public void runMarket() {
         for (Agent agent : agents) {
             for (TradeOffer offer : agent.createTradeOffers()) {
+                System.out.println(offer.toString());
                 agents.forEach(potentialBuyers -> potentialBuyers.processOffer(offer));
                 results.add(offer.resolve());
             }
         }
         for (TradeResult result : results) {
+            System.out.println(result.toString());
             for (Agent agent : agents) {
                 agent.processTradeResult(result);
             }

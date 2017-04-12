@@ -27,6 +27,8 @@ public class Main {
 
         Marketplace marketplace = new Marketplace(agents);
 
+        agents.forEach(Agent::produce);
+
         marketplace.runMarket();
 
         System.out.println("Managed to run without blowing up, congrats.");

@@ -16,6 +16,7 @@ public class Marketplace {
     }
 
     public void runMarket() {
+        results.clear();
         for (Agent agent : agents) {
             for (TradeOffer offer : agent.createTradeOffers()) {
                 System.out.println(offer.toString());

@@ -36,7 +36,7 @@ public class AgentFactory {
                 goodInfoDatabase,
                 Archetypes.Fisherman(),
                 valuationStrategyFactory.yoloStrategies(),
-                new RandomProductionStrategy(Archetypes.Farmer()),
+                new RandomProductionStrategy(Archetypes.Fisherman()),
                 new DummyDemandModel(),
                 "Fisherman Agent");
     }
@@ -45,9 +45,9 @@ public class AgentFactory {
         return new AgentImpl(
                 INITIAL_MONEY,
                 goodInfoDatabase,
-                Archetypes.Fisherman(),
+                Archetypes.Lumberjack(),
                 valuationStrategyFactory.yoloStrategies(),
-                new RandomProductionStrategy(Archetypes.Farmer()),
+                new RandomProductionStrategy(Archetypes.Lumberjack()),
                 new DummyDemandModel(),
                 "Fisherman Agent");
     }

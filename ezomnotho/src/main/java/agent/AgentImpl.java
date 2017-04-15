@@ -11,6 +11,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import goods.GoodId;
 import goods.GoodInfoDatabase;
+import logging.AgentLogger;
+import logging.LoggingFactory;
 import market.TradeOffer;
 import market.TradeResponse;
 import market.TradeResult;
@@ -30,6 +32,8 @@ public class AgentImpl implements Agent {
     private Random random;
     private static final int TIME_PER_PRODUCTION_CYCLE = 10;
     private final String agentName;
+    private AgentLogger logger;
+    private int internalClock;
 
     public AgentImpl(double initialMoney,
                      GoodInfoDatabase goodInfoDatabase,
@@ -45,6 +49,8 @@ public class AgentImpl implements Agent {
         this.demandModel = demandModel;
         this.random = new Random();
         this.agentName = agentName;
+        this.internalClock = 0;
+        this.logger = LoggingFactory.createAgentLogger(agentName);
     }
 
     @Override
@@ -123,13 +129,7 @@ public class AgentImpl implements Agent {
 
     @Override
     public void marketTick() {
-        System.out.println("==== " + agentName + " ====");
-        for (GoodId goodId : inventory.getAllGoods().keySet()) {
-            System.out.println(String.format("%s valued at %.2f (p=0.2), %.2f (p=0.5), %.2f (p=0.8)",
-                    goodId.toString(),
-                    valuationStrategies.get(goodId).valueItem(0.2),
-                    valuationStrategies.get(goodId).valueItem(0.5),
-                    valuationStrategies.get(goodId).valueItem(0.8)));
-        }
+        internalClock++;
+        logger.logItemValues(valuationStrategies, internalClock);
     }
 }

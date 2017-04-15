@@ -27,7 +27,7 @@ public class AgentFactory {
                 valuationStrategyFactory.yoloStrategies(),
                 new RandomProductionStrategy(Archetypes.Farmer()),
                 new DummyDemandModel(),
-                "Farmer Agent");
+                "Farmer");
     }
 
     public Agent makeFisherman() {
@@ -38,7 +38,7 @@ public class AgentFactory {
                 valuationStrategyFactory.yoloStrategies(),
                 new RandomProductionStrategy(Archetypes.Fisherman()),
                 new DummyDemandModel(),
-                "Fisherman Agent");
+                "Fisherman");
     }
 
     public Agent makeLumberjack() {
@@ -49,6 +49,6 @@ public class AgentFactory {
                 valuationStrategyFactory.yoloStrategies(),
                 new RandomProductionStrategy(Archetypes.Lumberjack()),
                 new DummyDemandModel(),
-                "Lumberjack Agent");
+                "Lumberjack");
     }
 }

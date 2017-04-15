@@ -12,6 +12,11 @@ public class LoggingFactory {
         return MarketLogger.create(MiniLogger.create(LOG_FOLDER + "market.log"));
     }
 
+    public static AgentLogger createAgentLogger(String agentName) {
+        maybeInitDirectory();
+        return AgentLogger.create(MiniLogger.create(LOG_FOLDER + agentName + ".log"));
+    }
+
     private static void maybeInitDirectory() {
         try {
             Files.createDirectories(Paths.get(LOG_FOLDER));

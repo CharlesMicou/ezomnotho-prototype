@@ -1,21 +1,27 @@
 package logging;
 
+import agent.valuation.strategy.ValuationStrategy;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import goods.GoodId;
 import market.TradeOffer;
-import market.TradeResult;
 import org.json.simple.JSONObject;
+
+import java.util.Map;
 
 import static logging.LogKeys.*;
 
 @SuppressWarnings("unchecked")
-public class MarketLogger {
+public class AgentLogger {
     private MiniLogger logger;
+    private static ImmutableList<Double> valuationPoints = ImmutableList.of(0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9);
 
-    private MarketLogger(MiniLogger logger) {
+    private AgentLogger(MiniLogger logger) {
         this.logger = logger;
     }
 
-    public static MarketLogger create(MiniLogger logger) {
-        return new MarketLogger(logger);
+    public static AgentLogger create(MiniLogger logger) {
+        return new AgentLogger(logger);
     }
 
     public void logTradeOffer(TradeOffer tradeOffer, int timestamp) {
@@ -25,20 +31,23 @@ public class MarketLogger {
         logger.write(obj);
     }
 
-    public void logTradeResult(TradeResult tradeResult, int timestamp) {
+    public void logItemValues(ImmutableMap<GoodId, ValuationStrategy> valuationStrategies, int timestamp) {
+        JSONObject values = new JSONObject();
+        valuationStrategies.entrySet().forEach(entry -> {
+            values.put(entry.getKey(), strategyToJSON(entry.getValue()));
+        });
+
         JSONObject obj = new JSONObject();
         obj.put(TIMESTAMP.toString(), timestamp);
-        obj.put(TRADE_RESULT.toString(), tradeResultToJSON(tradeResult));
+        obj.put(ITEM_VALUES.toString(), values);
         logger.write(obj);
     }
 
-    private JSONObject tradeResultToJSON(TradeResult result) {
+    private JSONObject strategyToJSON(ValuationStrategy strategy) {
         JSONObject obj = new JSONObject();
-        obj.put(GOOD_ID.toString(), result.goodId.toString());
-        obj.put(QUANTITY_OFFERED.toString(), result.quantityOffered);
-        obj.put(QUANTITY_DESIRED.toString(), result.quantityDesired);
-        obj.put(QUANTITY_TRADED.toString(), result.quantityTraded);
-        obj.put(PRICE_PER_ITEM.toString(), String.format("%.2f", result.pricePerItem));
+        for (Double valuationPoint : valuationPoints) {
+            obj.put(valuationPoint, strategy.valueItem(valuationPoint));
+        }
         return obj;
     }
 

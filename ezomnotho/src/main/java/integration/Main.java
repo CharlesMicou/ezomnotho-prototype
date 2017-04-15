@@ -21,14 +21,14 @@ public class Main {
                 agentFactory.makeFarmer(), agentFactory.makeFisherman(), agentFactory.makeLumberjack());
 
         agents.forEach(agentInitializer::train);
-        //agents.forEach(Agent::marketTick);
+        agents.forEach(Agent::marketTick);
 
         Marketplace marketplace = new Marketplace(agents);
 
         for (int i = 0; i < 2; i++) {
             agents.forEach(Agent::produce);
             marketplace.runMarket();
-            //agents.forEach(Agent::marketTick);
+            agents.forEach(Agent::marketTick);
         }
 
         System.out.println("Managed to run without blowing up, congrats.");

@@ -27,14 +27,14 @@ public class AgentInitializer {
 
     public void train(Agent agent) {
         for (GoodInfo goodInfo : goodInfoDatabase.allGoods()) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 1; i++) {
                 agent.processTradeResult(makeRandomTradeResult(goodInfo.id));
             }
         }
     }
 
     private TradeResult makeRandomTradeResult(GoodId goodId) {
-        int quantityOffered = (int) (random.nextDouble() * MAX_QUANTITY_OFFERED);
+        int quantityOffered = random.nextInt(MAX_QUANTITY_OFFERED) + 1;
         double askingPrice = MAX_ITEM_PRICE * random.nextDouble();
         int quantityTraded;
         int quantityDesired;

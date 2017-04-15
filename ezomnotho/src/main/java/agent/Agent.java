@@ -56,5 +56,10 @@ public interface Agent {
      *  The agent performs its actions for the production cycle.
      */
     void produce();
+
+    /**
+     *  The agent records its data to the event-logging system.
+     */
+    void monitor();
 }
 

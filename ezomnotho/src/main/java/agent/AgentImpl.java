@@ -120,4 +120,16 @@ public class AgentImpl implements Agent {
             order.consumedGoods.entrySet().forEach(entry -> inventory.removeGoods(entry.getKey(), entry.getValue()));
         }
     }
+
+    @Override
+    public void monitor() {
+        System.out.println("==== " + agentName + " ====");
+        for (GoodId goodId : inventory.getAllGoods().keySet()) {
+            System.out.println(String.format("%s valued at %.2f (p=0.2), %.2f (p=0.5), %.2f (p=0.8)",
+                    goodId.toString(),
+                    valuationStrategies.get(goodId).valueItem(0.2),
+                    valuationStrategies.get(goodId).valueItem(0.5),
+                    valuationStrategies.get(goodId).valueItem(0.8)));
+        }
+    }
 }

@@ -2,30 +2,35 @@ package market;
 
 import agent.Agent;
 import com.google.common.collect.ImmutableList;
+import logging.LoggingFactory;
+import logging.MarketLogger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Marketplace {
     private final ImmutableList<Agent> agents;
-    private List<TradeResult> results;
+    private MarketLogger logger;
+    private int marketClock;
 
     public Marketplace(ImmutableList<Agent> agents) {
         this.agents = agents;
-        this.results = new ArrayList<>();
+        this.logger = LoggingFactory.createMarketLogger();
+        this.marketClock = 0;
     }
 
     public void runMarket() {
-        results.clear();
+        marketClock++;
+        List<TradeResult> results = new ArrayList<>();
         for (Agent agent : agents) {
             for (TradeOffer offer : agent.createTradeOffers()) {
-                System.out.println(offer.toString());
+                logger.logTradeOffer(offer, marketClock);
                 agents.forEach(potentialBuyers -> potentialBuyers.processOffer(offer));
                 results.add(offer.resolve());
             }
         }
         for (TradeResult result : results) {
-            System.out.println(result.toString());
+            logger.logTradeResult(result, marketClock);
             for (Agent agent : agents) {
                 agent.processTradeResult(result);
             }

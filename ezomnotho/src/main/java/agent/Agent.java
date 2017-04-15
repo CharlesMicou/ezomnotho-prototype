@@ -58,8 +58,8 @@ public interface Agent {
     void produce();
 
     /**
-     *  The agent records its data to the event-logging system.
+     *  Inform the agent that we've moved to a new market phase so that it can do internal bookkeeping.
      */
-    void monitor();
+    void marketTick();
 }
 

@@ -122,7 +122,7 @@ public class AgentImpl implements Agent {
     }
 
     @Override
-    public void monitor() {
+    public void marketTick() {
         System.out.println("==== " + agentName + " ====");
         for (GoodId goodId : inventory.getAllGoods().keySet()) {
             System.out.println(String.format("%s valued at %.2f (p=0.2), %.2f (p=0.5), %.2f (p=0.8)",

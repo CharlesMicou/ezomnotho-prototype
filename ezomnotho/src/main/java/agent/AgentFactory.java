@@ -49,6 +49,6 @@ public class AgentFactory {
                 valuationStrategyFactory.yoloStrategies(),
                 new RandomProductionStrategy(Archetypes.Lumberjack()),
                 new DummyDemandModel(),
-                "Fisherman Agent");
+                "Lumberjack Agent");
     }
 }

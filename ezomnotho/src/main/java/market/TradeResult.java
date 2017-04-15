@@ -29,7 +29,7 @@ public class TradeResult {
             ", quantityOffered=" + quantityOffered +
             ", quantityDesired=" + quantityDesired +
             ", quantityTraded=" + quantityTraded +
-            ", pricePerItem=" + pricePerItem +
+            ", pricePerItem=" + String.format("%.2f", pricePerItem) +
             '}';
     }
 }

@@ -11,8 +11,11 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import goods.GoodId;
 import goods.GoodInfoDatabase;
+import logging.EventLogger;
 import market.Marketplace;
 import market.TradeResult;
+
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,11 +31,19 @@ public class Main {
 
         Marketplace marketplace = new Marketplace(agents);
 
-        /*for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             agents.forEach(Agent::produce);
             marketplace.runMarket();
             agents.forEach(Agent::monitor);
-        }*/
+        }
+
+        EventLogger testLogger = new EventLogger();
+        try {
+            testLogger.test();
+        } catch (IOException e) {
+            System.out.println("Failed to log somehow:" + e);
+        }
+
 
 
         System.out.println("Managed to run without blowing up, congrats.");

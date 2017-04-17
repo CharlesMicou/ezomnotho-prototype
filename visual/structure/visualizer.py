@@ -17,7 +17,7 @@ run_dir_abspath = os.path.join(logs_location, run_dir)
 print "Found log files: " + str(os.listdir(run_dir_abspath))
 
 # For now let's just have the fisherman:
-fisherman_log = os.path.join(run_dir_abspath, "Farmer.log")
+fisherman_log = os.path.join(run_dir_abspath, "Fisherman.log")
 
 fisherman_data = AgentData(fisherman_log)
 plotter = AgentPlotter()

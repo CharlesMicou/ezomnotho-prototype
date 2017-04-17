@@ -21,11 +21,10 @@ public class Main {
                 agentFactory.makeFarmer(), agentFactory.makeFisherman(), agentFactory.makeLumberjack());
 
         agents.forEach(agentInitializer::train);
-        agents.forEach(Agent::marketTick);
 
         Marketplace marketplace = new Marketplace(agents);
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = -1; i < 9; i++) {
             agents.forEach(Agent::produce);
             marketplace.runMarket();
             agents.forEach(Agent::marketTick);

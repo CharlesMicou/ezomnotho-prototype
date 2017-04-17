@@ -13,6 +13,11 @@ class AgentPlotter:
             self.plot_perceived_value(agent_data, good_id, colors[i % len(colors)])
             i += 1
 
+        plt.title('Agent ' + agent_data.name)
+        plt.xlabel("time (market cycle)")
+        plt.ylabel("value")
+
+        plt.legend()
         plt.show()
 
     @staticmethod
@@ -31,7 +36,7 @@ class AgentPlotter:
                          alpha=0.75)
             elif probability == "0.5":
                 plt.plot(time_series[probability], p_series[probability], color=color, linewidth=2.5, linestyle="-",
-                         alpha=1)
+                         alpha=1, label=str(good_id))
             else:
                 print "Unrecognised probability histogram. You really ought to generalize this"
 

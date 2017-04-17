@@ -2,9 +2,13 @@ import json
 
 
 # TODO: what do we want to actually visualize with this?
+import os
+
+
 class AgentData:
     def __init__(self, market_file):
         self.known_goods, self.inventory_history, self.item_values = extract_data(market_file)
+        self.name = os.path.basename(market_file).strip(".log")
         print "Extracted data from " + market_file
 
     def values_of_good(self, good_id):

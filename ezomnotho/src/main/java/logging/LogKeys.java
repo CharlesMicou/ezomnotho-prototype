@@ -13,4 +13,5 @@ public enum LogKeys {
     QUANTITY_TRADED,
     CREATOR,
     ITEM_VALUES,
+    INVENTORY,
 }

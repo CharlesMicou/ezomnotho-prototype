@@ -15,7 +15,6 @@ public class MiniLogger {
             Path logFilePath = Paths.get(filePath);
             Files.createFile(logFilePath);
             this.writer = new FileWriter(filePath, true);
-            System.out.println("Made the logger correctly");
         } catch (IOException e) {
             System.out.println("Blew up making the logger. " + e);
         }
@@ -25,7 +24,7 @@ public class MiniLogger {
         return new MiniLogger(filePath);
     }
 
-    public void write(JSONObject json) {
+    void write(JSONObject json) {
         try {
             writer.write(json.toJSONString() + "\n");
             writer.flush();
@@ -37,7 +36,7 @@ public class MiniLogger {
     /**
      * Java has no destructors :(
      */
-    public void close() {
+    void close() {
         try {
             writer.close();
         } catch (IOException e) {

@@ -1,13 +1,12 @@
 package logging;
 
+import agent.inventory.Inventory;
 import agent.valuation.strategy.ValuationStrategy;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import goods.GoodId;
 import market.TradeOffer;
 import org.json.simple.JSONObject;
-
-import java.util.Map;
 
 import static logging.LogKeys.*;
 
@@ -41,6 +40,19 @@ public class AgentLogger {
         obj.put(TIMESTAMP.toString(), timestamp);
         obj.put(ITEM_VALUES.toString(), values);
         logger.write(obj);
+    }
+
+    public void logInventoryContents(Inventory inventory, int timestamp) {
+        JSONObject obj = new JSONObject();
+        obj.put(TIMESTAMP.toString(), timestamp);
+        obj.put(INVENTORY.toString(), inventoryToJSON(inventory));
+        logger.write(obj);
+    }
+
+    private JSONObject inventoryToJSON(Inventory inventory) {
+        JSONObject obj = new JSONObject();
+        obj.putAll(inventory.getAllGoods());
+        return obj;
     }
 
     private JSONObject strategyToJSON(ValuationStrategy strategy) {

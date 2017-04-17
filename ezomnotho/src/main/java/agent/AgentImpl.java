@@ -131,5 +131,6 @@ public class AgentImpl implements Agent {
     public void marketTick() {
         internalClock++;
         logger.logItemValues(valuationStrategies, internalClock);
+        logger.logInventoryContents(inventory, internalClock);
     }
 }

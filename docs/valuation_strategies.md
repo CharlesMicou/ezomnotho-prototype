@@ -33,7 +33,8 @@ Imagine some node that knows about multiple modelling strategies (for simplicity
  ![Single Node](https://github.com/CharlesMicou/ezomnotho-prototype/blob/master/docs/img/validation_strategies/single_node.png)
 
 These weights serve as an approximation to ![P(M) / P(M | x <= X)] . When we want to calculate ![p = P(x <= X)] , we perform the the sum over all the models of the probability given each model multiplied by the weight of that model (caveat: this makes some independence assumptions):
-<center>![sum(wi)pm]</center>
+
+![sum(wi)pm]
 
 But how do we actually get these weights? This is where the unsupervised learning comes in: given our first observation of some data, we calculate the posterior probabilities ![P(Mi | x = X)] (note that this is the PDF _not_ the CDF). We then proportionally normalize these posteriors such that they sum to 1 (this is equivalent using ![P(M)]). These values become our weights w<sub>i</sub>. When we receive subsequent data, we calculate new values of w<sub>i</sub>, and update the existing values of w<sub>i</sub> based on a combination of the old value and a new value. Simplistically, this can be done with a basic learning rate. We could come up with more sophisticated update strategies--but I haven't yet got around to giving it too much thought.
 

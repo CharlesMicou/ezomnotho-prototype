@@ -28,9 +28,9 @@ Instead, what we're going to do is consider these two terms relating to the mode
 
 Imagine some node that knows about multiple modelling strategies (for simplicity, consider that all the models are some Gaussian with differing means and values). This node is fed ![P(x <= X | Mi)] for all of the models. The node is then going to weight each model, such that the weightings w<sub>i</sub> sum to 1.
 
- <center>![sum(wi) = 1]</center>
+ ![sum(wi) = 1]
 
- <p><center>![Single Node](https://github.com/CharlesMicou/ezomnotho-prototype/blob/master/docs/img/validation_strategies/single_node.png)</center></p>
+ ![Single Node](https://github.com/CharlesMicou/ezomnotho-prototype/blob/master/docs/img/validation_strategies/single_node.png)
 
 These weights serve as an approximation to ![P(M) / P(M | x <= X)] . When we want to calculate ![p = P(x <= X)] , we perform the the sum over all the models of the probability given each model multiplied by the weight of that model (caveat: this makes some independence assumptions):
 <center>![sum(wi)pm]</center>
@@ -41,7 +41,7 @@ In practice, it is also helpful to randomize the starting weightings rather than
 
 The output of our 'node' is ![p = P(x <= X)]. _Or is it?_ Well, it's just an approximation to p. So what we've actually calculated is ![P(x <= X | N)] : the probability given that our node is the correct model. This sounds familiar!
 
-<p><center>![Multi node](https://github.com/CharlesMicou/ezomnotho-prototype/blob/master/docs/img/validation_strategies/node_network.png)</center></p>
+![Multi node](https://github.com/CharlesMicou/ezomnotho-prototype/blob/master/docs/img/validation_strategies/node_network.png)
 
 By having many such nodes, with different models feeding into each, and each initialized differently such that it is possible for them to settle at different local maxima, we're able to build up a better overall model of 'p'. Note that the nodes need to be arranged in a directed acyclic graph, otherwise we can't solve the network.
 

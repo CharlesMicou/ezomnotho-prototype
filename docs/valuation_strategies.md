@@ -4,7 +4,7 @@ The logic used by agents in determining the values of goods in the simulation is
 
 What we want the valuation strategy to do is give us a probabilistic description of how valuable we think a good is. Concretely, we want to be able to calculate:
 
-<center>![p = P(x <= X)]</center>
+![p = P(x <= X)]
 
 The probability p of the true value x of a good being less than or equal to some value X. This lets us answer a question like "what is the chance that buying cabbage on offer for 10 coins is worth it?".
 
@@ -16,7 +16,7 @@ But... that calculation for p is only valid if our model is valid, so actually w
 
 So let's use Bayes' theorem to get an expression for p:
 
-<center>![p = P(x <= X) = P(x <= X | M) * P(M) / P(M | x <= X)]</center>
+![p = P(x <= X) = P(x <= X | M) * P(M) / P(M | x <= X)]
 
 There are two new terms here, can we assign any real meaning to them to attempt to calculate them?
 
@@ -30,18 +30,18 @@ Imagine some node that knows about multiple modelling strategies (for simplicity
 
  <center>![sum(wi) = 1]</center>
 
- <p><center>![Single Node](img/validation_strategies/single_node.png)</center></p>
+ <p><center>![Single Node](https://github.com/CharlesMicou/ezomnotho-prototype/blob/master/docs/img/validation_strategies/single_node.png)</center></p>
 
 These weights serve as an approximation to ![P(M) / P(M | x <= X)] . When we want to calculate ![p = P(x <= X)] , we perform the the sum over all the models of the probability given each model multiplied by the weight of that model (caveat: this makes some independence assumptions):
 <center>![sum(wi)pm]</center>
 
-But how do we actually get these weights? This is where the unsupervised learning comes in: given our first observation of some data, we calculate the posterior probabilities ![P(Mi | x = X)] (note that this is the PDF _not_ the CDF). We then proportionally normalize these posteriors such that they sum to 1 (this is equivalent using P(M)). These values become our weights w<sub>i</sub>. When we receive subsequent data, we calculate new values of w<sub>i</sub>, and update the existing values of w<sub>i</sub> based on a combination of the old value and a new value. Simplistically, this can be done with a basic learning rate. We could come up with more sophisticated update strategies--but I haven't yet got around to giving it too much thought.
+But how do we actually get these weights? This is where the unsupervised learning comes in: given our first observation of some data, we calculate the posterior probabilities ![P(Mi | x = X)] (note that this is the PDF _not_ the CDF). We then proportionally normalize these posteriors such that they sum to 1 (this is equivalent using ![P(M)]). These values become our weights w<sub>i</sub>. When we receive subsequent data, we calculate new values of w<sub>i</sub>, and update the existing values of w<sub>i</sub> based on a combination of the old value and a new value. Simplistically, this can be done with a basic learning rate. We could come up with more sophisticated update strategies--but I haven't yet got around to giving it too much thought.
 
 In practice, it is also helpful to randomize the starting weightings rather than doing it from an initial datapoint (see below).
 
 The output of our 'node' is ![p = P(x <= X)]. _Or is it?_ Well, it's just an approximation to p. So what we've actually calculated is ![P(x <= X | N)] : the probability given that our node is the correct model. This sounds familiar!
 
-<p><center>![Single Node](img/validation_strategies/node_network.png)</center></p>
+<p><center>![Multi node](https://github.com/CharlesMicou/ezomnotho-prototype/blob/master/docs/img/validation_strategies/node_network.png)</center></p>
 
 By having many such nodes, with different models feeding into each, and each initialized differently such that it is possible for them to settle at different local maxima, we're able to build up a better overall model of 'p'. Note that the nodes need to be arranged in a directed acyclic graph, otherwise we can't solve the network.
 

@@ -81,6 +81,7 @@ public class AgentImpl implements Agent {
                         valuationStrategies.get(entry.getKey()).valueItem(0.5),
                         entry.getValue(),
                         this))
+                .filter(offer -> offer.pricePerItem > 0) // todo: warn here because this shouldn't happen
                 .collect(Collectors.toList()));
     }
 
@@ -93,7 +94,7 @@ public class AgentImpl implements Agent {
         double perceivedValue = valuationStrategies.get(offer.goodId).valueItem(demandModel.needForGood(offer.goodId));
         if (offer.pricePerItem <= perceivedValue) {
             // for the moment, buy a random number that we can afford
-            int toBuy = random.nextInt((int) Math.ceil(inventory.getOwnedMoney() / offer.pricePerItem));
+            int toBuy = random.nextInt((int) Math.max(1, Math.ceil(inventory.getOwnedMoney() / offer.pricePerItem)));
             return new TradeResponse(this, toBuy);
         } else {
             return new TradeResponse(this, 0);

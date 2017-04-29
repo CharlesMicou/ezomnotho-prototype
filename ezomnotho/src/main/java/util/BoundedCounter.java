@@ -32,4 +32,8 @@ public class BoundedCounter {
     public int get() {
         return Math.min(currentValue, maxValue);
     }
+
+    private final int getMaxValue() {
+        return maxValue;
+    }
 }

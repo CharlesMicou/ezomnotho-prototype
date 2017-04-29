@@ -42,7 +42,6 @@ public class GaussianValuationStrategy implements ValuationStrategy {
         if (varianceProvider.getVariance() == 0) {
             return meanProvider.getMean();
         }
-
         return new NormalDistribution(rng, meanProvider.getMean(), Math.sqrt(varianceProvider.getVariance()))
                 .inverseCumulativeProbability(percentile);
     }

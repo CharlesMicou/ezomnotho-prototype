@@ -36,6 +36,10 @@ public class UnmetTradesMean implements GaussianMeanProvider {
     private TradeResult makeFakeTrade(TradeResult original) {
         int totalInFakeTrade = Math.max(original.quantityDesired, original.quantityOffered);
         double delta = (double) (original.quantityDesired - original.quantityTraded) / original.quantityOffered;
+        if (Double.isNaN(delta)) {
+            // catch empty trades
+            return original;
+        }
         double attenuation = attenuator.getAttenuation(delta);
         double price = original.pricePerItem * (1 + Math.signum(delta) * attenuation);
         if (delta > 0) {
@@ -48,8 +52,6 @@ public class UnmetTradesMean implements GaussianMeanProvider {
 
         // don't spoof negative trades, that would be bad.
         price = Math.max(price, 0);
-
-        System.out.println("spoofing a trade of " + original.goodId.name() + " at value " + price);
 
         return new TradeResult(original.goodId, totalInFakeTrade, totalInFakeTrade, totalInFakeTrade, price);
     }

@@ -22,6 +22,12 @@ public class SimpleAverageMean implements GaussianMeanProvider {
         int numberTraded = result.quantityTraded;
         double priceTraded = result.pricePerItem;
         int n = numberOfSamples.get();
+
+        if (n < numberTraded) {
+            // we're trying to process more values than we're allowed to remember!
+            mean = priceTraded;
+        }
+
         mean = mean * (n - numberTraded) / n + priceTraded * numberTraded / n;
     }
 

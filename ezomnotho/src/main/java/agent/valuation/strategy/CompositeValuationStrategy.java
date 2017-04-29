@@ -42,9 +42,16 @@ public class CompositeValuationStrategy implements ValuationStrategy {
 
     @Override
     public double valueItem(double percentile) {
-        return weightedStrategies.entrySet().stream()
+        double result = weightedStrategies.entrySet().stream()
                 .map(entry -> entry.getValue() * entry.getKey().valueItem(percentile))
                 .reduce(0.0, (a, b) -> a + b);
+        if (Double.isNaN(result)) {
+            System.out.println("WARNING: Composite strategy got a NaN result for:" + this.getGoodId());
+            for (ValuationStrategy strategy : weightedStrategies.keySet()) {
+                System.out.println("Strategy " + strategy.toString() + " values at " + strategy.valueItem(percentile));
+            }
+        }
+        return result;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class AgentFactory {
                 INITIAL_MONEY,
                 goodInfoDatabase,
                 Archetypes.Farmer(),
-                valuationStrategyFactory.yoloStrategies(),
+                valuationStrategyFactory.makeArchStrategy(),
                 new RandomProductionStrategy(Archetypes.Farmer()),
                 new DummyDemandModel(),
                 "Farmer");
@@ -46,7 +46,7 @@ public class AgentFactory {
                 INITIAL_MONEY,
                 goodInfoDatabase,
                 Archetypes.Lumberjack(),
-                valuationStrategyFactory.yoloStrategies(),
+                valuationStrategyFactory.makeArchStrategy(),
                 new RandomProductionStrategy(Archetypes.Lumberjack()),
                 new DummyDemandModel(),
                 "Lumberjack");

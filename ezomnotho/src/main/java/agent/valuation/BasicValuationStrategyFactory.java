@@ -26,10 +26,10 @@ public class BasicValuationStrategyFactory {
         strategies.add(makeFixedGaussian(goodId, 100, 0.2));
         strategies.add(makeSmoothedMeanGaussian(goodId, 0.5, 0.3));
         strategies.add(makeUnmetTradesFixedVarianceExpoMean(goodId, 0.5, 0.2));
-        /*strategies.add(makeUnmetTradesFixedVarianceExpoMean(goodId, 0.25, 0.2));
+        strategies.add(makeUnmetTradesFixedVarianceExpoMean(goodId, 0.25, 0.2));
         strategies.add(makeUnmetTradesFixedVarianceExpoMean(goodId, 0.75, 0.2));
         strategies.add(makeUnmetTradesLearnedVarianceGaussian(goodId, 100));
-        strategies.add(makeUnmetTradesLearnedVarianceGaussian(goodId, 50));*/
+        strategies.add(makeUnmetTradesLearnedVarianceGaussian(goodId, 50));
 
         return CompositeValuationStrategy.uniformStrategy(goodId, strategies);
     }

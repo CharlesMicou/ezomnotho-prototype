@@ -59,8 +59,8 @@ public class ArchValuationStrategyFactory {
             GoodId goodId = entry.getKey();
             finalStrategies.put(goodId, new CompositeValuationStrategy(goodId,
                     ImmutableMap.of(
-                            1 - substitute_weighting, basicStrategies.get(goodId),
-                            substitute_weighting, substitutionStrategies.get(goodId))));
+                            basicStrategies.get(goodId), 1 - substitute_weighting,
+                            substitutionStrategies.get(goodId), substitute_weighting)));
         });
 
         // Generate some dummy trades of all items to do initialisation.
@@ -87,8 +87,8 @@ public class ArchValuationStrategyFactory {
                             new LearnedNormalDistributionValuationStrategy(goodInfo.id, max_history);
                     ValuationStrategy fixedStrategy =
                             new FixedVarianceNormalDistributionValuationStrategy(goodInfo.id, max_history, breadth);
-                    ImmutableMap<Double, ValuationStrategy> composite =
-                            ImmutableMap.of(weightingA, learnedStrategy, weightingB, fixedStrategy);
+                    ImmutableMap<ValuationStrategy, Double> composite =
+                            ImmutableMap.of(learnedStrategy, weightingA, fixedStrategy, weightingB);
                     ValuationStrategy overallStrategy =
                             new CompositeValuationStrategy(goodInfo.id, composite);
                     strategies.put(goodInfo.id, overallStrategy);

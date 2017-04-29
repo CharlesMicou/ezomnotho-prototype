@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableMap;
 import goods.GoodId;
 import market.TradeResult;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A Composite Valuation Strategy takes several existing weighting strategies and combines them
@@ -12,18 +14,20 @@ import java.util.List;
  * even more complicated.
  */
 public class CompositeValuationStrategy implements ValuationStrategy {
-    private final ImmutableMap<Double, ValuationStrategy> weightedStrategies;
+    private final ImmutableMap<ValuationStrategy, Double> weightedStrategies;
     private final GoodId goodId;
 
-    public CompositeValuationStrategy(GoodId goodId, ImmutableMap<Double, ValuationStrategy> weightedStrategies) {
+    public CompositeValuationStrategy(GoodId goodId, ImmutableMap<ValuationStrategy, Double> weightedStrategies) {
         this.weightedStrategies = normaliseWeightings(weightedStrategies);
         this.goodId = goodId;
     }
 
     public static CompositeValuationStrategy uniformStrategy(GoodId goodId, List<ValuationStrategy> strategies) {
-        ImmutableMap.Builder<Double, ValuationStrategy> builder = ImmutableMap.builder();
-        strategies.forEach(strategy -> builder.put(1.0, strategy));
-        return new CompositeValuationStrategy(goodId, builder.build());
+        Map<ValuationStrategy, Double> strategyToWeighting = new HashMap<>();
+        strategies.forEach(strategy -> {
+                    strategyToWeighting.put(strategy, 1.0);
+                });
+        return new CompositeValuationStrategy(goodId, ImmutableMap.copyOf(strategyToWeighting));
     }
 
     @Override
@@ -33,28 +37,28 @@ public class CompositeValuationStrategy implements ValuationStrategy {
 
     @Override
     public void processTradeResult(TradeResult result) {
-        weightedStrategies.values().forEach(strategy -> strategy.processTradeResult(result));
+        weightedStrategies.keySet().forEach(strategy -> strategy.processTradeResult(result));
     }
 
     @Override
     public double valueItem(double percentile) {
         return weightedStrategies.entrySet().stream()
-                .map(entry -> entry.getKey() * entry.getValue().valueItem(percentile))
+                .map(entry -> entry.getValue() * entry.getKey().valueItem(percentile))
                 .reduce(0.0, (a, b) -> a + b);
     }
 
     @Override
     public double probabilityOfGoodTrade(double offeredPrice) {
         return weightedStrategies.entrySet().stream()
-                .map(entry -> entry.getKey() * entry.getValue().probabilityOfGoodTrade(offeredPrice))
+                .map(entry -> entry.getValue() * entry.getKey().probabilityOfGoodTrade(offeredPrice))
                 .reduce(0.0, (a, b) -> a + b);
     }
 
-    private ImmutableMap<Double, ValuationStrategy> normaliseWeightings(
-            ImmutableMap<Double, ValuationStrategy> initial) {
-        final double sumOfWeights = initial.keySet().stream().reduce(0.0, (a, b) -> a + b);
-        ImmutableMap.Builder<Double, ValuationStrategy> builder = ImmutableMap.builder();
-        initial.entrySet().forEach(entry -> builder.put(entry.getKey() / sumOfWeights, entry.getValue()));
+    private ImmutableMap<ValuationStrategy, Double> normaliseWeightings(
+            ImmutableMap<ValuationStrategy, Double> initial) {
+        final double sumOfWeights = initial.values().stream().reduce(0.0, (a, b) -> a + b);
+        ImmutableMap.Builder<ValuationStrategy, Double> builder = ImmutableMap.builder();
+        initial.entrySet().forEach(entry -> builder.put(entry.getKey(), entry.getValue() / sumOfWeights));
         return builder.build();
     }
 }

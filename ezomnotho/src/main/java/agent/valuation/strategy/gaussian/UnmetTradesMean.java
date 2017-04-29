@@ -46,6 +46,11 @@ public class UnmetTradesMean implements GaussianMeanProvider {
             price = original.pricePerItem * (1 - attenuation);
         }
 
+        // don't spoof negative trades, that would be bad.
+        price = Math.max(price, 0);
+
+        System.out.println("spoofing a trade of " + original.goodId.name() + " at value " + price);
+
         return new TradeResult(original.goodId, totalInFakeTrade, totalInFakeTrade, totalInFakeTrade, price);
     }
 }

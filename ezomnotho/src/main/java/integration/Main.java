@@ -24,7 +24,7 @@ public class Main {
 
         Marketplace marketplace = new Marketplace(agents);
 
-        for (int i = -1; i < 9; i++) {
+        for (int i = -1; i < 99; i++) {
             agents.forEach(Agent::produce);
             marketplace.runMarket();
             agents.forEach(Agent::marketTick);

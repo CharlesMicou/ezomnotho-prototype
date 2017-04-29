@@ -66,7 +66,9 @@ public class ArchValuationStrategyFactory {
         // Generate some dummy trades of all items to do initialisation.
 
         // Maybe an initial value of 0; i.e. worthless until proven otherwise, is sensible.
-        return ImmutableMap.copyOf(finalStrategies);
+        //return ImmutableMap.copyOf(finalStrategies);
+        // for now just use basic strategies
+        return basicStrategies;
     }
 
     // temporary measures to do integration testing:

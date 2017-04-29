@@ -27,7 +27,7 @@ public class AgentInitializer {
 
     public void train(Agent agent) {
         for (GoodInfo goodInfo : goodInfoDatabase.allGoods()) {
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 50; i++) {
                 agent.processTradeResult(makeRandomTradeResult(goodInfo.id));
             }
         }

@@ -3,8 +3,6 @@ package agent.valuation;
 
 import agent.valuation.strategy.CompositeValuationStrategy;
 import agent.valuation.strategy.ValuationStrategy;
-import agent.valuation.strategy.gaussian.FixedVarianceNormalDistributionValuationStrategy;
-import agent.valuation.strategy.gaussian.LearnedNormalDistributionValuationStrategy;
 import com.google.common.collect.ImmutableMap;
 import goods.GoodId;
 import goods.GoodInfoDatabase;
@@ -69,32 +67,5 @@ public class ArchValuationStrategyFactory {
         //return ImmutableMap.copyOf(finalStrategies);
         // for now just use basic strategies
         return basicStrategies;
-    }
-
-    // temporary measures to do integration testing:
-    public ImmutableMap<GoodId, ValuationStrategy> yoloStrategies() {
-        int max_history = 100;
-
-        Map<GoodId, ValuationStrategy> strategies = new HashMap<>();
-
-        goodInfoDatabase.allGoods().forEach(
-                goodInfo -> {
-
-                    double breadth = 0.1 + 0.1 * random.nextDouble();
-
-                    double weightingA = random.nextDouble();
-                    double weightingB = 1 - weightingA;
-
-                    ValuationStrategy learnedStrategy =
-                            new LearnedNormalDistributionValuationStrategy(goodInfo.id, max_history);
-                    ValuationStrategy fixedStrategy =
-                            new FixedVarianceNormalDistributionValuationStrategy(goodInfo.id, max_history, breadth);
-                    ImmutableMap<ValuationStrategy, Double> composite =
-                            ImmutableMap.of(learnedStrategy, weightingA, fixedStrategy, weightingB);
-                    ValuationStrategy overallStrategy =
-                            new CompositeValuationStrategy(goodInfo.id, composite);
-                    strategies.put(goodInfo.id, overallStrategy);
-                });
-        return ImmutableMap.copyOf(strategies);
     }
 }

@@ -9,7 +9,7 @@ public class SimpleLearnedVariance implements GaussianVarianceProvider {
     private double variance;
     private final BoundedCounter numberOfSamples;
 
-    SimpleLearnedVariance(int maxHistory) {
+    public SimpleLearnedVariance(int maxHistory) {
         this.meanProvider = new SimpleAverageMean(maxHistory);
         this.numberOfSamples = BoundedCounter.create(maxHistory);
     }

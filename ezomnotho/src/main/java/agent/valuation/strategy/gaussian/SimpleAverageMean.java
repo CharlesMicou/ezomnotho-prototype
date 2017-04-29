@@ -12,7 +12,7 @@ public class SimpleAverageMean implements GaussianMeanProvider {
     private double mean;
     private final BoundedCounter numberOfSamples;
 
-    SimpleAverageMean(int maxHistory) {
+    public SimpleAverageMean(int maxHistory) {
         this.numberOfSamples = BoundedCounter.create(maxHistory);
     }
 

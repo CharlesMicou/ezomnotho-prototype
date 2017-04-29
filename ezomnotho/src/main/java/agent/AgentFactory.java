@@ -35,7 +35,7 @@ public class AgentFactory {
                 INITIAL_MONEY,
                 goodInfoDatabase,
                 Archetypes.Fisherman(),
-                valuationStrategyFactory.yoloStrategies(),
+                valuationStrategyFactory.makeArchStrategy(),
                 new RandomProductionStrategy(Archetypes.Fisherman()),
                 new DummyDemandModel(),
                 "Fisherman");

@@ -17,7 +17,7 @@ public class UnmetTradesMean implements GaussianMeanProvider {
     private final GaussianMeanProvider underlyingProvider;
     private final Attenuator attenuator;
 
-    UnmetTradesMean(GaussianMeanProvider underlyingProvider) {
+    public UnmetTradesMean(GaussianMeanProvider underlyingProvider) {
         this.underlyingProvider = underlyingProvider;
         // todo: expose the attenuation strategy, don't hard code max attenuation of 50%
         this.attenuator = new QuadraticAttenuator(0.5);

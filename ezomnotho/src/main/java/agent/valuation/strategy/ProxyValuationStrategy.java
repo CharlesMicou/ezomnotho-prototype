@@ -11,7 +11,7 @@ public class ProxyValuationStrategy implements ValuationStrategy {
 
     private final ValuationStrategy underlyingStrategy;
 
-    ProxyValuationStrategy(ValuationStrategy underlyingStrategy) {
+    public ProxyValuationStrategy(ValuationStrategy underlyingStrategy) {
         this.underlyingStrategy = underlyingStrategy;
     }
 

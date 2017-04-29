@@ -11,7 +11,7 @@ public class ExponentialSmoothedMean implements GaussianMeanProvider {
     private final double alpha;
     private double mean;
 
-    ExponentialSmoothedMean(double alpha) {
+    public ExponentialSmoothedMean(double alpha) {
         if (alpha > 1 || alpha < 0) {
             throw new java.lang.IllegalArgumentException("Tried to make exponential smoothing with alpha " + alpha);
         }

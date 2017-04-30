@@ -22,12 +22,9 @@ for logfile in os.listdir(run_dir_abspath):
     if logfile != "market.log":
         agent_data.append(AgentData(os.path.join(run_dir_abspath, logfile)))
 
-# For now let's just have the fisherman:
-fisherman_log = os.path.join(run_dir_abspath, "Fisherman.log")
-
-fisherman_data = AgentData(fisherman_log)
-
-print fisherman_data.inventory_contents_at_time(3)
+"""for data in agent_data:
+    plotter = AgentPlotter()
+    plotter.make_all_plots(data, ["CABBAGE", "WOOD", "FISH"])"""
 
 plotter = AgentPlotter()
-plotter.plot_perceived_values(fisherman_data, ["CABBAGE", "WOOD", "FISH"])
+plotter.make_all_plots(agent_data[0], ["CABBAGE", "WOOD", "FISH"])

@@ -3,22 +3,45 @@ import matplotlib.pyplot as plt
 
 class AgentPlotter:
     def __init__(self):
+        self.colors = ['blue', 'red', 'green', 'magenta', 'cyan', 'purple', 'orange', 'yellow']
         pass
 
-    def plot_perceived_values(self, agent_data, good_ids):
+    def make_all_plots(self, agent_data, good_ids):
         fig, ax = plt.subplots()
-        colors = ['blue', 'red', 'green', 'magenta', 'cyan', 'purple', 'orange', 'yellow']
+        self.plot_perceived_values(agent_data, good_ids)
+        self.plot_inventory_contents(agent_data, good_ids)
+        fig.suptitle('Agent ' + agent_data.name)
+        fig.subplots_adjust(hspace=0.4)
+        plt.show()
+
+    def plot_perceived_values(self, agent_data, good_ids):
+        ax = plt.subplot(2, 1, 1)
         i = 0
         for good_id in good_ids:
-            self.plot_perceived_value(agent_data, good_id, colors[i % len(colors)], ax)
+            self.plot_perceived_value(agent_data, good_id, self.colors[i % len(self.colors)], ax)
             i += 1
 
-        plt.title('Agent ' + agent_data.name)
+        plt.title('Perceived good values')
         plt.xlabel("time (market cycle)")
         plt.ylabel("value")
-
         plt.legend()
-        plt.show()
+
+    def plot_inventory_contents(self, agent_data, good_ids):
+        ax = plt.subplot(2, 1, 2)
+        i = 0
+        for good_id in good_ids:
+            self.plot_inventory_item(agent_data, good_id, self.colors[i % len(self.colors)], ax)
+            i += 1
+
+        plt.title('Inventory contents')
+        plt.xlabel("time (market cycle)")
+        plt.ylabel("quantity")
+        plt.legend()
+
+    @staticmethod
+    def plot_inventory_item(agent_data, good_id, color, ax):
+        time_series, data_series = agent_data.count_of_good(good_id)
+        plt.plot(time_series, data_series, color=color, label=str(good_id))
 
     @staticmethod
     def plot_perceived_value(agent_data, good_id, color, ax):

@@ -29,6 +29,18 @@ class AgentData:
     def inventory_contents_at_time(self, timestamp):
         return self.inventory_history[timestamp]
 
+    def count_of_good(self, good_id):
+        if good_id not in self.known_goods:
+            print "Tried to value a good not found in the data: " + str(good_id)
+            return None
+        time_series = []
+        data_series = []
+        for timestamp in self.inventory_history.iterkeys():
+            time_series.append(timestamp)
+            data_series.append(self.inventory_contents_at_time(timestamp)[good_id])
+
+        return time_series, data_series
+
     """
     what do we want to plot over time?
     - inventory contents

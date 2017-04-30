@@ -26,6 +26,9 @@ class AgentData:
 
         return time_series, data_series
 
+    def inventory_contents_at_time(self, timestamp):
+        return self.inventory_history[timestamp]
+
     """
     what do we want to plot over time?
     - inventory contents
